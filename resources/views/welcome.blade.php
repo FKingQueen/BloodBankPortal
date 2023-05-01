@@ -6,6 +6,7 @@
         <!-- <meta name="csrf-token" content="{{ csrf_token() }}"/> -->
         <title>Laravel</title>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        
         <script>
             (function () {
                 window.Laravel = {
@@ -15,6 +16,7 @@
         </script>
     </head>
     <body class="antialiased">
+    
         @if (!Auth::check())
             <script>
                 window.Laravel = {!!json_encode([
@@ -35,5 +37,8 @@
 
         </div>
         <script src="{{mix('/js/app.js')}}"></script>
+        
+
+        
     </body>
 </html>

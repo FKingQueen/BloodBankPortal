@@ -1,10 +1,14 @@
 <template>
-
-    <div class="flex justify-center h-screen w-screen items-center">
+  <div class="h-screen w-screen">
+    <div class="text-center mt-40 ">
+      <h1 class="text-2xl font-bold">NEGROS ORIENTAL PROVINCIAL HOSPITAL BLOOD BANK</h1>
+      <h1 class="text-2xl font-bold">PORTAL</h1>
+    </div>
+    <div class="flex justify-center  items-center">
         <div class="w-full flex flex-col items-center">
-            <div class="md:w-1/4 w-11/12 border px-2 pt-5 shadow">
+            <div class="md:w-1/4 w-11/12 px-2 pt-5 shadow">
                 <div>
-                    <h1 class="text-center text-2xl font-bold text-gray-600 mb-6">COASTER LOGIN</h1>
+                    <h1 class="text-center text-base text-gray-600 mb-6">Login</h1>
                 </div>
                 <a-form
                     :model="this.formState"
@@ -41,16 +45,21 @@
 
                     <a-form-item >
                         <div class="flex justify-between" >
-                            <a class="login-form-forgot" href="">Forgot password</a>
+                            <!-- <a class="login-form-forgot" href="">Forgot password</a> -->
+                            <router-link to="/register" class="">
+                              Register
+                            </router-link>
                             <a-button  :disabled="disabled"  type="primary" html-type="submit" class="login-form-button">
                                 Login
                             </a-button>
                         </div>
                     </a-form-item>
                 </a-form>
+
             </div>
         </div>
     </div>
+  </div>
 </template>
 <script>
 import { defineComponent, reactive, computed } from 'vue';
@@ -108,6 +117,7 @@ export default defineComponent({
                         message: 'Notification',
                         description: 'Incorrect Login Details',
                     });
+                    return;
                 }
                 window.Laravel.isLoggedin = true
                 
@@ -120,8 +130,9 @@ export default defineComponent({
     }
   },
   async created(){
-    console.log(window.Laravel);
-    console.log(window)
+    if(window.Laravel.isLoggedin){
+      this.$router.go(-1)
+    }
   }
 });
 </script>

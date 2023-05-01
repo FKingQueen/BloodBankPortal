@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ArticleController;  
+use App\Http\Controllers\Admin\UserApprovalController;  
 use App\Http\Controllers\Home\HarticleController;  
+use App\Http\Controllers\RegistrationController;  
 
 /*
 |--------------------------------------------------------------------------
@@ -33,20 +35,19 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:sanctum'], function() {
     Route::post('/updateUser', [UserController::class, 'updateUser']);
     Route::post('/updatePassword', [UserController::class, 'updatePassword']);
 
-
-    // Admin Article
-    Route::get('/getArticle', [ArticleController::class, 'getArticle']);
-
-    Route::post('/storeArticle', [ArticleController::class, 'storeArticle']);
-    Route::post('/upload', [ArticleController::class, 'upload']);
-    Route::post('/deleteImage', [ArticleController::class, 'deleteImage']);
-
-    Route::post('/deleteArticle/{id}', [ArticleController::class, 'deleteArticle']);
-
-    Route::get('/getArticleEdit/{id}', [ArticleController::class, 'getArticleEdit']);
-    Route::post('/updateArticle', [ArticleController::class, 'updateArticle']);
+    // 
+    Route::get('/getUserApproval', [UserApprovalController::class, 'getUserApproval']);
+    Route::post('/userApproved/{id}', [UserApprovalController::class, 'userApproved']);
+    Route::post('/userDisapproved/{id}', [UserApprovalController::class, 'userDisapproved']);
 });
 
 Route::get('/getArticles', [HarticleController::class, 'getArticles']);
+
+// Project
+
+Route::post('/uploadid', [RegistrationController::class, 'uploadid']);
+Route::post('/deleteImageReg', [RegistrationController::class, 'deleteImageReg']);
+
+Route::post('/register', [RegistrationController::class, 'register']);
 
 

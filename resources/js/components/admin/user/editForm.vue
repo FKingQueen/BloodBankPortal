@@ -17,7 +17,7 @@
                 <FormItem label="User Type" prop="userType">
                     <Select v-model="formValidate.userType" placeholder="Select your User Type">
                         <Option value="1">Admin</Option>
-                        <Option value="2">Editor</Option>
+                        <Option value="2">User</Option>
                     </Select>
                 </FormItem>
                 <!-- <FormItem label="Password" prop="passwd">
@@ -118,13 +118,13 @@
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     // Post
-                    axios.post(`/api/updateUser`, this.formValidate)
+                    axios.post(`/api/admin/updateUser`, this.formValidate)
                     .then(function (response) {
                         notification.success({
                             message: 'Notification',
                             description: 'Users Info is Successfully Updated',
                         });
-                        existingObj.$router.push('/userPlatform');
+                        existingObj.$router.push('/admin/userPlatform');
                     })
                     .catch(function (error) {
                         if (error.response.data.errors.email) {
@@ -146,7 +146,7 @@
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     // Post
-                    axios.post(`/api/updatePassword`, this.formValidate)
+                    axios.post(`/api/admin/updatePassword`, this.formValidate)
                     .then(function (response) {
                         notification.success({
                             message: 'Notification',

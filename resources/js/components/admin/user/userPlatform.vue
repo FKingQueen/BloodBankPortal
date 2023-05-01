@@ -1,10 +1,9 @@
 <template>
   <div class="p-2">
     <div class="m-5 bg-white shadow-inner shadow-lg rounded px-10 py-5">
-      <div class="flex justify-center text-2xl">
+      <div class="flex justify-center text-2xl mb-3">
         User Management
       </div>
-      <a-button  type="primary" @click="this.$router.push('/admin/userPlatform/addForm')" class="mb-2">New User</a-button>
 
       <a-table :data-source="users" :columns="columns" size="small">
         <template #headerCell="{ column }">
@@ -72,13 +71,8 @@
               </a-popconfirm>
             </span>
           </template>
-          <template v-else-if="column.key === 'userType'">
-            <span v-if="this.users[index].userType == 1">
-              Admin
-            </span>
-            <span v-else>
-              Editor
-            </span>
+          <template v-else-if="column.key === 'name'">
+              <p>{{record.lastName}}, {{ record.firstName }} {{ record.middleInitial }}</p>
           </template>
         </template>
 
