@@ -32,10 +32,12 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ];
-
+        
         if(Auth::attempt($credentials)){
+            $userType = Auth::user()->userType;
             return response()->json([
-                'auth'  =>  'success'
+                'auth'  =>  'success',
+                'userType' =>  $userType
             ]);
             
         }else{
@@ -43,7 +45,7 @@ class AdminController extends Controller
                 'auth'  =>  'failed'
             ]);
         }
-
+        
         return $validated;
     }
     

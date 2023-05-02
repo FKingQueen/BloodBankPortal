@@ -28,7 +28,7 @@
             <script>
                 window.Laravel = {!!json_encode([
                     'isLoggedin' => true,
-                    'user' => Auth::user()->name,
+                    'userType' => Auth::user()->userType,
                     'csrfToken' =>  csrf_token() ,
                 ])!!}
             </script>

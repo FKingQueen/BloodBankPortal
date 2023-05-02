@@ -1,11 +1,13 @@
 import {createWebHistory, createRouter} from "vue-router";
 
-// Project
-
-
-// Admin
+// Home
+import portal from '../components/portal.vue';
 
 // User
+import home from '../components/user/home.vue';
+import chatbox from '../components/user/chatbox.vue';
+
+// Admin
 import userPlatform from '../components/admin/user/userPlatform.vue';
 import editUserForm from '../components/admin/user/editForm.vue';
 
@@ -31,11 +33,26 @@ export const routes = [
         path: '/',
         component: login,
     },
-    // Register
     {
         name: 'register',
         path: '/register',
         component: register,
+    },
+    {
+        path: '/portal',
+        component: portal,
+        children:[
+            {
+                name: 'home',
+                path: '/portal/home',
+                component: home,
+            },
+            {
+                name: 'chatbox',
+                path: '/portal/chatbox',
+                component: chatbox,
+            },
+        ]
     },
 
     {
@@ -92,6 +109,7 @@ router.beforeEach((to, from, next) => {
     } else {
         next();
     }
+
 });
 
 

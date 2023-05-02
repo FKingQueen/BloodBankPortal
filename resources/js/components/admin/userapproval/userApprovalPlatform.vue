@@ -2,7 +2,7 @@
   <div class="p-2">
     <div class="m-5 bg-white shadow-inner shadow-lg rounded px-10 py-5">
       <div class="flex justify-center text-2xl mb-3">
-        User Approval
+        User Approval Management
       </div>
 
       <a-table :data-source="users" :columns="columns" size="small">

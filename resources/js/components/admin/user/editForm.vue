@@ -8,24 +8,77 @@
             </Breadcrumb>
             <a-button @click="this.$router.push('/admin/userPlatform')" class="my-3">Back</a-button>
             <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="95" class="px-10" >
-                <FormItem label="Name" prop="name">
-                    <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
+                <FormItem label="User Type" prop="userType">
+                    <Select v-model="formValidate.userType" placeholder="Select your User Type">
+                        <Option value="Admin">Admin</Option>
+                        <Option value="User">User</Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="First Name" prop="firstName">
+                    <Input v-model="formValidate.firstName" placeholder="Enter your firstName"></Input>
+                </FormItem>
+                <FormItem label="Last Name" prop="lastName">
+                    <Input v-model="formValidate.lastName" placeholder="Enter your lastName"></Input>
+                </FormItem>
+                <FormItem label="Middle Initial" prop="middleInitial">
+                    <Input v-model="formValidate.middleInitial" placeholder="Enter your middleInitial"></Input>
                 </FormItem>
                 <FormItem label="E-mail" prop="email">
                     <Input v-model="formValidate.email" placeholder="Enter your e-mail"></Input>
                 </FormItem>
-                <FormItem label="User Type" prop="userType">
-                    <Select v-model="formValidate.userType" placeholder="Select your User Type">
-                        <Option value="1">Admin</Option>
-                        <Option value="2">User</Option>
+                <FormItem label="Age" prop="age">
+                    <Input v-model="formValidate.age" placeholder="Enter your Age"></Input>
+                </FormItem>
+                <FormItem label="Address" prop="address">
+                    <Select v-model="formValidate.address" placeholder="Select your Municipality/City">
+                        <Option value="Amlan (Ayuquitan)">Amlan (Ayuquitan)</Option>
+                        <Option value="Ayungon">Ayungon</Option>
+                        <Option value="Bacong">Bacong</Option>
+                        <Option value="Bais">Bais</Option>
+                        <Option value="Bais">Bais</Option>
+                        <Option value="Bayawan (Tolong)">Bayawan (Tolong)</Option>
+                        <Option value="Bindoy (Payabon)">Bindoy (Payabon)</Option>
+                        <Option value="Canlaon">Canlaon</Option>
+                        <Option value="Dauin">Dauin</Option>
+                        <Option value="Dumaguete">Dumaguete</Option>
+                        <Option value="Guihulngan">Guihulngan</Option>
+                        <Option value="Jimalalud-">Jimalalud</Option>
+                        <Option value="La Libertad">La Libertad</Option>
+                        <Option value="Mabinay">Mabinay</Option>
+                        <Option value="Manjuyod">Manjuyod</Option>
+                        <Option value="Pamplona">Pamplona</Option>
+                        <Option value="Santa Catalina">Santa Catalina</Option>
+                        <Option value="Siaton">Siaton</Option>
+                        <Option value="Sibulan">Sibulan</Option>
+                        <Option value="Tanjay">Tanjay</Option>
+                        <Option value="Tayasan">Tayasan</Option>
+                        <Option value="Valencia (Luzurriaga)">Valencia (Luzurriaga)</Option>
+                        <Option value="Vallehermoso">Vallehermoso</Option>
+                        <Option value="Zamboanguita">Zamboanguita</Option>
                     </Select>
                 </FormItem>
-                <!-- <FormItem label="Password" prop="passwd">
-                    <Input type="password" v-model="formValidate.passwd"></Input>
+                <FormItem label="Phone Number" prop="phoneNumber">
+                    <Input v-model="formValidate.phoneNumber" placeholder="Enter your Phone Number"></Input>
                 </FormItem>
-                <FormItem label="Confirm" prop="passwdCheck">
-                    <Input type="password" v-model="formValidate.passwdCheck"></Input>
-                </FormItem> -->
+                <FormItem label="Gender" prop="gender">
+                    <Select v-model="formValidate.gender" placeholder="Select your Gender">
+                        <Option value="Male">Male</Option>
+                        <Option value="Female">Female</Option>
+                    </Select>
+                </FormItem>
+                <FormItem label="Blood Type" prop="bloodType">
+                    <Select v-model="formValidate.bloodType" placeholder="Select your Gender">
+                        <Option value="A+">A+</Option>
+                        <Option value="A-">A-</Option>
+                        <Option value="B+">B+</Option>
+                        <Option value="B-">B-</Option>
+                        <Option value="O+">O+</Option>
+                        <Option value="O-">O-</Option>
+                        <Option value="AB+">AB+</Option>
+                        <Option value="AB-">AB-</Option>
+                    </Select>
+                </FormItem>
+
                 <FormItem >
                     <a-button type="primary" @click="showModal">Change Password</a-button>
                     <a-modal v-model:visible="visible" title="Updating Password" @ok="changePassword('formValidate')">
@@ -86,22 +139,56 @@
             showModal,
             formValidate: {
                 id: '',
-                name: '',
+                firstName: '',
+                lastName: '',
+                middleInitial: '',
                 email: '',
                 userType: '',
+                age: '',
+                address: '',
+                phoneNumber: '',
+                gender: '',
+                idPic: '',
+                bloodType: '',
                 passwd: '',
                 passwdCheck: ''
             },
             ruleValidate: {
-                name: [
-                    { required: true, message: 'The name cannot be empty', trigger: 'blur' }
+                userType: [
+                    { required: true, message: 'Please select the userType', trigger: 'change' }
+                ],
+                firstName: [
+                    { required: true, message: 'The Full Name cannot be empty', trigger: 'blur' }
+                ],
+                lastName: [
+                    { required: true, message: 'The Last Name cannot be empty', trigger: 'blur' }
+                ],
+                middleInitial: [
+                    { required: true, message: 'The Middle Initial cannot be empty', trigger: 'blur' },
+                    { type: 'string', max: 1, message: 'Initial Only', trigger: 'blur' }
+                ],
+                birthDate: [
+                    { required: true, message: 'The Birth Date cannot be empty', trigger: 'blur' }
+                ],
+                phoneNumber: [
+                    { required: true, message: 'The Phone Number cannot be empty', trigger: 'blur' },
+                    { type: 'string', max: 11, min: 11, message: '11 digits is required', trigger: 'blur' }
+                ],
+                age: [
+                    { required: true, message: 'The Age cannot be empty', trigger: 'blur' }
+                ],
+                gender: [
+                    { required: true, message: 'The Gender cannot be empty', trigger: 'blur' }
+                ],
+                bloodType: [
+                    { required: true, message: 'The Blood Type cannot be empty', trigger: 'blur' }
+                ],
+                idPic: [
+                    { required: true, message: 'The Identication Picture cannot be empty', trigger: 'blur' }
                 ],
                 email: [
                     { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
                     { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
-                ],
-                userType: [
-                    { required: true, message: 'Please select the userType', trigger: 'change' }
                 ],
                 passwd: [
                     { validator: validatePass, trigger: 'blur' }
@@ -175,15 +262,23 @@
     },
     async created(){
         let id = this.$route.params.id
-        console.log(id);
         let existingObj = this;
         await axios.get(`/api/admin/getUserEdit/${id}`)
         .then(function (response) {
-            console.log(response.data);
+            
             existingObj.formValidate.userType = response.data.userType
             existingObj.formValidate.id = response.data.id
-            existingObj.formValidate.name = response.data.name  
+            existingObj.formValidate.firstName = response.data.firstName  
+            existingObj.formValidate.lastName = response.data.lastName  
+            existingObj.formValidate.middleInitial = response.data.middleInitial  
+            existingObj.formValidate.middleInitial = response.data.middleInitial  
             existingObj.formValidate.email = response.data.email
+            existingObj.formValidate.age = response.data.age
+            existingObj.formValidate.address = response.data.address
+            existingObj.formValidate.phoneNumber = response.data.phoneNumber
+            existingObj.formValidate.gender = response.data.gender
+            existingObj.formValidate.bloodType = response.data.bloodType
+            console.log(response.data.userType);
         })
         .catch(function (error) {
             console.log(error)

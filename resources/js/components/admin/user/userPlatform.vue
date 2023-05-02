@@ -158,7 +158,7 @@ export default defineComponent({
       let id = this.users[key].id;
       this.users.splice(key, 1);
 
-      axios.post(`/api/deleteUser/${id}`)
+      axios.post(`/api/admin/deleteUser/${id}`)
       .then(function (response) {
         notification.success({
             message: 'Notification',
