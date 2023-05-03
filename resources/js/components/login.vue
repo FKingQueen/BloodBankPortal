@@ -120,10 +120,11 @@ export default defineComponent({
                     return;
                 }
                 window.Laravel.isLoggedin = true
+
                 if(response.data.userType == 'Admin'){
                   this.$router.push({path: '/admin/userApprovalPlatform'})
                 }else if(response.data.userType == 'User'){
-                  this.$router.push({path: '/portal/home'})
+                  this.$router.push({path: '/home'})
                 }
                 
             })

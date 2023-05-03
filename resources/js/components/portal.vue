@@ -51,7 +51,7 @@ export default defineComponent({
 </script>
 
 
-<style scoped>
+<style v-if="isAdmin" scoped>
 .router-link-exact-active{
     /* background-color: rgb(156 163 175); */
     border-bottom: 4px solid rgb(59 130 246);

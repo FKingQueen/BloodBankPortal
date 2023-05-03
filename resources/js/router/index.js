@@ -1,10 +1,9 @@
 import {createWebHistory, createRouter} from "vue-router";
 
-// Home
-import portal from '../components/portal.vue';
 
 // User
-import home from '../components/user/home.vue';
+import home from '../components/user/homePage/home.vue';
+import donateBlood from '../components/user/homePage/donateBlood.vue';
 import chatbox from '../components/user/chatbox.vue';
 
 // Admin
@@ -38,36 +37,54 @@ export const routes = [
         path: '/register',
         component: register,
     },
-    {
-        path: '/portal',
-        component: portal,
-        children:[
-            {
-                name: 'home',
-                path: '/portal/home',
-                component: home,
-            },
-            {
-                name: 'chatbox',
-                path: '/portal/chatbox',
-                component: chatbox,
-            },
-        ]
-    },
+    // {
+    //     path: '/portal',
+    //     component: portal,
+    //     children:[
+    //         {
+    //             name: 'home',
+    //             path: '/portal/home',
+    //             component: home,
+    //         },
+    //         {
+    //             name: 'chatbox',
+    //             path: '/portal/chatbox',
+    //             component: chatbox,
+    //         },
+    //     ]
+    // },
 
     {
-        path: '/admin',
+        path: '/',
         component: dashboard,
         meta : {requiresAuth: true},
         children:[
+            // User
+            {
+                name: 'home',
+                path: '/home',
+                component: home,
+            },
+            {
+                name: 'donateBlood',
+                path: '/donateBlood',
+                component: donateBlood,
+            },
+            {
+                name: 'chatbox',
+                path: '/chatbox',
+                component: chatbox,
+            },
+
             // Admin
+            // User Approval Management
             {
                 name: 'userApprovalPlatform',
                 path: '/admin/userApprovalPlatform',
                 component: userApprovalPlatform  
             },
 
-            //User 
+            //User Management
             {
                 name: 'userPlatform',
                 path: '/admin/userPlatform',

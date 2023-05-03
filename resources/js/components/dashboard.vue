@@ -9,8 +9,8 @@
   }
 </style>
 <template>
-  <div >
-    <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased " style="background-color: rgb(245 247 249);">
+  <div>
+    <div v-if="isAdmin" class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased " style="background-color: rgb(245 247 249);">
       <div> 
         <!-- Header -->
         <div class="fixed w-full flex items-center justify-between h-14 text z-10">
@@ -47,13 +47,13 @@
                 </div>
               </li>
               <li>
-                <router-link to="/admin/userApprovalPlatform" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-white hover:text-slate-300 border-l-4 border-transparent hover:border-blue-500 pr-6">
+                <router-link to="/admin/userApprovalPlatform" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-white hover:text-slate-300 border-b-4 border-transparent hover:border-blue-500 pr-6">
                   <span class="inline-flex justify-center items-center ml-4">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                   </span>
                   <span class="ml-2 text-sm tracking-wide truncate">User Approval Management</span>
                 </router-link>
-                <router-link to="/admin/userPlatform" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-white hover:text-slate-300 border-l-4 border-transparent hover:border-blue-500 pr-6">
+                <router-link to="/admin/userPlatform" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-800 text-white hover:text-slate-300 border-b-4 border-transparent hover:border-blue-500 pr-6">
                   <span class="inline-flex justify-center items-center ml-4">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                   </span>
@@ -81,14 +81,57 @@
         <router-view ></router-view>
       </div>
     </div>
-  </div>   
+    <div v-if="isUser">
+        <!-- Header -->
+        <div class=" w-full flex items-center justify-between bg-gray-300 h-14  z-10">
+          <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 ">
+            <span class="hidden md:block ">PORTAL</span>
+          </div>
+          <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 ">
+                <router-link to="/home" class="text-black relative flex flex-row items-center h-12 focus:outline-none hover:text-black border-b-4 border-transparent hover:border-blue-500 p-6">
+                  <span class="">HOME</span>
+                </router-link>
+                <router-link to="/chatbox" class="text-black relative flex flex-row items-center h-12 focus:outline-none hover:text-black border-b-4 border-transparent hover:border-blue-500 p-6">
+                  <span class="">CHATBOX</span>
+                </router-link>
+          </div>
+          
+          <div class="flex justify-between items-center   header-right">
+            <ul class="justify-end flex w-full">
+              <li>
+                <a @click="logout()" class="flex items-center mr-4 text-black hover:text-gray-400 hidden lg:block">
+                  <div class="flex">
+                    <div>
+                      <svg class="w-7 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    </div>
+                    <div>
+                      Logout
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- ./Header -->
+        <div class="w-full">
+            <router-view ></router-view>
+        </div>
+    </div>
+  </div> 
+    
   
 </template>
 
 <script>
-export default {
-  data(){
+import { defineComponent, reactive, onMounted, ref, toRefs } from 'vue';
+export default defineComponent({
+  setup(){
+    const isAdmin = ref(false);
+    const isUser = ref(false);
     return{
+      isAdmin,
+      isUser
     }
   },
   methods: {
@@ -108,19 +151,28 @@ export default {
   },
   async created(){
     console.log(window.Laravel);
+
+    let existingObj = this;
+    this.token = window.Laravel.csrfToken;
+    await axios.get('/api/admin/getAuth')
+    .then(function (response) {
+      // console.log(response.data.userType);
+      existingObj.isAdmin = response.data.userType === 'Admin' ? true:false
+      existingObj.isUser = response.data.userType === 'User' ? true:false
+      console.log(existingObj.isAdmin);
+      
+    })
+    .catch(function (error) {
+    });
   }
-}
+})
 </script>
 
-<style scoped>
+
+<style  scoped>
 .router-link-exact-active{
-    background-color: rgb(31 41 55);
-    border-left: 4px solid rgb(59 130 246);
-    color: rgb(203 213 225);
+    /* background-color: rgb(156 163 175); */
+    border-bottom: 4px solid rgb(59 130 246);
 }
-.router-link-active{
-    background-color: rgb(31 41 55);
-    border-left: 4px solid rgb(59 130 246);
-    color: rgb(203 213 225);
-}
+
 </style>

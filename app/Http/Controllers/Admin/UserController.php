@@ -17,6 +17,11 @@ class UserController extends Controller
         return User::orderBy('id', 'desc')->get();
     }
 
+    public function getAuth()
+    {
+        return Auth::user();
+    }
+
     public function storeUser(Request $request){
         $validated = $request->validate([
             'name' => 'required',

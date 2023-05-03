@@ -8,7 +8,7 @@
       <a-table :data-source="users" :columns="columns" size="small">
         <template #headerCell="{ column }">
           <template v-if="column.key === 'name'">
-            <span style="color: #1890ff">Title</span>
+            <span style="color: #1890ff">Name</span>
           </template>
         </template>
         <template
