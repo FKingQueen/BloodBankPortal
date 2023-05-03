@@ -22,11 +22,24 @@ class UserSeeder extends Seeder
             'middleInitial' => 'C',
             'userType' => 'Admin',
             'age' => '23',
-            'address' => 'Currimao',
+            'address' => 'Amlan (Ayuquitan)',
             'gender' => 'Male',
             'bloodType' => 'A+',
             'phoneNumber' => '09053102687',
             'email' => 'p@gmail.com',
+            'password' => Hash::make('12345678'),
+        ]);
+        DB::table('users')->insert([
+            'firstName' => 'Hisiah',
+            'LastName' => 'Nidoy',
+            'middleInitial' => 'B',
+            'userType' => 'User',
+            'age' => '23',
+            'address' => 'Amlan (Ayuquitan)',
+            'gender' => 'Female',
+            'bloodType' => 'A+',
+            'phoneNumber' => '09053102687',
+            'email' => 'h@gmail.com',
             'password' => Hash::make('12345678'),
         ]);
     }
