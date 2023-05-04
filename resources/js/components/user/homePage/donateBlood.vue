@@ -80,22 +80,22 @@ export default defineComponent({
           },
           ruleValidate: {
                 bloodType: [
-                  { required: true, message: 'The Full Name cannot be empty', trigger: 'blur' }
+                  { required: true, message: 'The Blood Type cannot be empty', trigger: 'blur' }
                 ],
                 hourSleep: [
-                    { required: true, message: 'The Full Name cannot be empty', trigger: 'blur' }
+                    { required: true, message: 'This Section cannot be empty', trigger: 'blur' }
                 ],
                 drugUser: [
-                    { required: true, message: 'The Full Name cannot be empty', trigger: 'blur' }
+                    { required: true, message: 'This Section cannot be empty', trigger: 'blur' }
                 ],
                 alcoholic: [
-                    { required: true, message: 'The Full Name cannot be empty', trigger: 'blur' }
+                    { required: true, message: 'This Section cannot be empty', trigger: 'blur' }
                 ],
                 cardHolder: [
-                    { required: true, message: 'The Full Name cannot be empty', trigger: 'blur' }
+                    { required: true, message: 'This Section cannot be empty', trigger: 'blur' }
                 ],
                 weight: [
-                    { required: true, message: 'The Full Name cannot be empty', trigger: 'blur' }
+                    { required: true, message: 'The Weight cannot be empty', trigger: 'blur' }
                 ],
           },
       }
@@ -108,24 +108,30 @@ export default defineComponent({
             if (valid) {
                     axios.post(`/api/admin/storeDonateBlood`, this.formValidate)
                     .then(function (response) {
-                        console.log(response.data);
                         Modal.success({
                             title: 'Submission is Complete!',
                             content: h('div', {}, [h('p', 'Please contact this Phone Number'),h('a', '09123456789'),h('p', 'for next process. Thank You!')]),
                         });
+                        existingObj.$router.push('/home');
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
+
+                    
             } else {
             }
             
         })
           
-      }
-  },
-  async created(){
-      this.token = window.Laravel.csrfToken;
-  }
+      },
+
+    },
+    beforeRouteEnter(to, from, next) {
+        if(window.Laravel.userType == 'Admin'){
+            next({ path: from.path });
+        }
+        next();    
+    }
 })
 </script>

@@ -43,6 +43,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:sanctum'], function() {
 
     // User
     Route::post('/storeDonateBlood', [HomeController::class, 'storeDonateBlood']);
+    Route::post('/getDonatedBlood', [HomeController::class, 'getDonatedBlood']);
 });
 
 

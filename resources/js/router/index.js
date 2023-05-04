@@ -4,6 +4,7 @@ import {createWebHistory, createRouter} from "vue-router";
 // User
 import home from '../components/user/homePage/home.vue';
 import donateBlood from '../components/user/homePage/donateBlood.vue';
+import findBlood from '../components/user/homePage/findBlood.vue';
 import chatbox from '../components/user/chatbox.vue';
 
 // Admin
@@ -69,6 +70,11 @@ export const routes = [
                 name: 'donateBlood',
                 path: '/donateBlood',
                 component: donateBlood,
+            },
+            {
+                name: 'findBlood',
+                path: '/findBlood',
+                component: findBlood,
             },
             {
                 name: 'chatbox',

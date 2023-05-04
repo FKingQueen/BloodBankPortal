@@ -10,10 +10,27 @@
                         <a-button key="submit" @click="this.$router.push('/donateBlood')" type="primary" class="w-full mb-5">DONATE BLOOD</a-button>
                     </div>
                     <div class="flex justify-center">
-                        <a-button key="submit" type="primary" class="w-full">LOOKING FOR BLOOD</a-button>
+                        <a-button key="submit" @click="this.$router.push('/findBlood')" type="primary" class="w-full">LOOKING FOR BLOOD</a-button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+import { defineComponent, ref, onMounted, h } from 'vue';
+export default defineComponent({
+    data(){
+        return{
+            
+        }
+    },
+    beforeRouteEnter(to, from, next) {
+        if(window.Laravel.userType == 'Admin'){
+            next({ path: from.path });
+        }
+        next();    
+    }
+})
+</script>

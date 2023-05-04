@@ -11,6 +11,7 @@ class DonateBlood extends Model
     protected $fillable = [
         'user_id',
         'bloodType',
+        'address',
         'hourSleep',
         'drugUser',
         'alcoholic',
