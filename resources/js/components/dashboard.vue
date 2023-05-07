@@ -9,14 +9,14 @@
   }
 </style>
 <template>
-  <div>
+  <div class="bgImage">
     <div v-if="isAdmin" class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased " style="background-color: rgb(245 247 249);">
       <div> 
         <!-- Header -->
         <div class="fixed w-full flex items-center justify-between h-14 text z-10">
           <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-gray-300 border-none">
             <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden bg-gray-300" src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" />
-            <span class="hidden md:block ">ADMIN</span>
+            <span class="hidden md:block "> ADMIN ({{ this.userName }})</span>
           </div>
           <div class="flex justify-between items-center h-14 bg-gray-300 header-right">
             <ul class="justify-end flex w-full">
@@ -91,7 +91,7 @@
                 <router-link to="/home" class="text-black relative flex flex-row items-center h-12 focus:outline-none hover:text-black border-b-4 border-transparent hover:border-blue-500 p-6">
                   <span class="">HOME</span>
                 </router-link>
-                <router-link to="/chatbox" class="text-black relative flex flex-row items-center h-12 focus:outline-none hover:text-black border-b-4 border-transparent hover:border-blue-500 p-6">
+                <router-link v-if="isRoom" to="/chatBox" class="text-black relative flex flex-row items-center h-12 focus:outline-none hover:text-black border-b-4 border-transparent hover:border-blue-500 p-6">
                   <span class="">CHATBOX</span>
                 </router-link>
           </div>
@@ -102,10 +102,10 @@
                 <a @click="logout()" class="flex items-center mr-4 text-black hover:text-gray-400 hidden lg:block">
                   <div class="flex">
                     <div>
-                      <svg class="w-7 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                      {{ this.userName }}
                     </div>
                     <div>
-                      Logout
+                      <svg class="w-7 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     </div>
                   </div>
                 </a>
@@ -129,9 +129,25 @@ export default defineComponent({
   setup(){
     const isAdmin = ref(false);
     const isUser = ref(false);
+    const isRoom = ref(false);
     return{
       isAdmin,
-      isUser
+      isUser,
+      userName: '',
+      isRoom,
+    }
+  },
+  watch:{
+    $route (to, from){
+      let existingObj = this;
+      axios.get('/api/admin/checkRooms')
+      .then(function (response) {
+        if(response.data != ""){
+          existingObj.isRoom = true;
+        }
+      })
+      .catch(function (error) {
+      });
     }
   },
   methods: {
@@ -150,20 +166,27 @@ export default defineComponent({
     }
   },
   async created(){
-    console.log(window.Laravel);
-
+    // console.log(window.Laravel);
     let existingObj = this;
     this.token = window.Laravel.csrfToken;
-    await axios.get('/api/admin/getAuth')
+    axios.get('/api/admin/checkRooms')
     .then(function (response) {
-      // console.log(response.data.userType);
-      existingObj.isAdmin = response.data.userType === 'Admin' ? true:false
-      existingObj.isUser = response.data.userType === 'User' ? true:false
-      console.log(existingObj.isAdmin);
-      
+      if(response.data != ""){
+        existingObj.isRoom = true;
+      }
     })
     .catch(function (error) {
     });
+    await axios.get('/api/admin/getAuth')
+      .then(function (response) {
+        // console.log(response.data.userType);
+        existingObj.isAdmin = response.data.userType === 'Admin' ? true:false
+        existingObj.isUser = response.data.userType === 'User' ? true:false
+        existingObj.userName = response.data.firstName
+        
+      })
+      .catch(function (error) {
+      });
   }
 })
 </script>

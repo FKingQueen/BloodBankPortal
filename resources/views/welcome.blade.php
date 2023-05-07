@@ -29,6 +29,7 @@
                 window.Laravel = {!!json_encode([
                     'isLoggedin' => true,
                     'userType' => Auth::user()->userType,
+                    'user' => Auth::user(),
                     'csrfToken' =>  csrf_token() ,
                 ])!!}
             </script>
@@ -37,8 +38,6 @@
 
         </div>
         <script src="{{mix('/js/app.js')}}"></script>
-        
-
         
     </body>
 </html>

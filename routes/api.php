@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\UserApprovalController;  
 use App\Http\Controllers\Home\HomeController;  
 use App\Http\Controllers\RegistrationController;  
+use App\Http\Controllers\ChatController;  
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,14 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:sanctum'], function() {
     // User
     Route::post('/storeDonateBlood', [HomeController::class, 'storeDonateBlood']);
     Route::post('/getDonatedBlood', [HomeController::class, 'getDonatedBlood']);
+    // Chat
+    Route::post('/chatNow', [ChatController::class, 'chatNow']);
+    Route::get('/getUserId', [ChatController::class, 'getUserId']);
+    Route::get('/getAllUser', [ChatController::class, 'getAllUser']);
+    Route::get('/checkRooms', [ChatController::class, 'checkRooms']);
+    Route::get('/rooms', [ChatController::class, 'rooms']);
+    Route::get('/room/{roomId}/messages', [ChatController::class, 'messages']);
+    Route::post('/room/{roomId}/message', [ChatController::class, 'newMessage']);
 });
 
 

@@ -26,7 +26,9 @@ class HomeController extends Controller
     }
 
     public function getDonatedBlood(Request $request){
-        $donatedBlood = DonateBlood::where('address', $request->address)->where('bloodType', $request->bloodType)->get();
+        $donatedBlood = DonateBlood::where('user_id', '!=' , Auth::user()->id)->where('address', $request->address)->where('bloodType', $request->bloodType)->get();
         return $donatedBlood;
     }
+
+
 }

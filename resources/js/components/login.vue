@@ -1,12 +1,12 @@
-<template>
-  <div class="h-screen w-screen">
-    <div class="text-center mt-40 ">
-      <h1 class="text-2xl font-bold">NEGROS ORIENTAL PROVINCIAL HOSPITAL BLOOD BANK</h1>
-      <h1 class="text-2xl font-bold">PORTAL</h1>
+<template class="">
+  <div class="h-screen bgImage">
+    <div class="text-center pt-40">
+      <h1 class="text-2xl font-bold text-white">NEGROS ORIENTAL PROVINCIAL HOSPITAL BLOOD BANK</h1>
+      <h1 class="text-2xl font-bold text-white">PORTAL</h1>
     </div>
-    <div class="flex justify-center  items-center">
-        <div class="w-full flex flex-col items-center">
-            <div class="md:w-1/4 w-11/12 px-2 pt-5 shadow">
+    <div class="flex justify-center pt-20">
+        <div class="w-full flex flex-col items-center ">
+            <div class="md:w-1/4 w-11/12 px-2 pt-5 shadow-lg border bg-white">
                 <div>
                     <h1 class="text-center text-base text-gray-600 mb-6">Login</h1>
                 </div>
@@ -14,7 +14,7 @@
                     :model="this.formState"
                     name="normal_login"
                     v-bind="layout"
-                    class="login-form"
+                    class="login-form "
                     @finish="login"
                     @finishFailed="onFinishFailed"
                     :validate-messages="validateMessages"
@@ -46,7 +46,7 @@
                     <a-form-item >
                         <div class="flex justify-between" >
                             <!-- <a class="login-form-forgot" href="">Forgot password</a> -->
-                            <router-link to="/register" class="">
+                            <router-link to="/register" class="ml-2 mt-2">
                               Register
                             </router-link>
                             <a-button  :disabled="disabled"  type="primary" html-type="submit" class="login-form-button">
@@ -141,3 +141,13 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.bgImage {
+    background-image: url('/img/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #FFFFFF;
+}
+</style>

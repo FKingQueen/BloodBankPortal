@@ -1,14 +1,14 @@
 <template>
-    <div>
-        <div class="flex justify-center my-10">
-            <h1 class="text-2xl font-bold">NEGROS ORIENTAL PROVINCIAL HOSPITAL BLOOD BANK PORTAL</h1>
+    <div class="h-screen bgImage">
+        <div class="flex justify-center p-10">
+            <h1 class="text-2xl font-bold text-white">NEGROS ORIENTAL PROVINCIAL HOSPITAL BLOOD BANK PORTAL</h1>
         </div>
         <div class="flex justify-center">
-            <h1 class="text-lg font-base">Looking for Blood</h1>
+            <h1 class="text-lg font-base text-white">Looking for Blood</h1>
         </div>
         <div class="flex justify-center">
-            <div class="w-3/6 border shadow-lg">
-                <div class="flex justify-center">    
+            <div class="w-3/6 border shadow-lg bg-white">
+                <div class="flex justify-center ">    
                     <div class="w-2/4 py-5">
                         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
                             <FormItem label="Address" prop="address">
@@ -59,12 +59,12 @@
                 </div>
                 <div class="w-full mb-5 flex justify-center">
                     <div class="w-4/5">
-                        <h1 class="text-lg">Result:</h1>
+                        <h1 v-if="donatedBloods!=''" class="text-lg">Result:</h1>
                         <div class="grid grid-cols-2  gap-4">
-                            <div v-for='(donatedBlood) in donatedBloods' :key='donatedBlood.id' class="text-end border-2 p-2">
-                                <p>Address: <a-tag color="cyan">{{ donatedBlood.address }}</a-tag> </p>
-                                <p class="mt-1">Blood Type:  <a-tag color="green">{{ donatedBlood.bloodType }}</a-tag> </p>
-                                <Button :size="buttonSize" type="dashed" class="mt-1">Chat Now!</Button>
+                            <div v-for='(donatedBlood, index) in donatedBloods' :key='donatedBlood.id' class="text-end border-2 p-2">
+                                <p class="mt-1 text-black">Address: <a-tag color="green">{{ donatedBlood.address }}</a-tag> </p>
+                                <p class="mt-1 text-black">Blood Type:  <a-tag color="red">{{ donatedBlood.bloodType }}</a-tag> </p>
+                                <Button :size="buttonSize" v-on:click="chatNow(donatedBlood)" type="dashed" class="mt-1 mr-2">Chat Now!</Button>
                             </div>
                         </div>
                     </div>
@@ -76,12 +76,8 @@
 
 
 <script>
-import { UploadOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref, onMounted, h } from 'vue';
 import { DownloadOutlined } from '@ant-design/icons-vue';
-import { notification } from 'ant-design-vue';
-import { Modal } from 'ant-design-vue';
-import { useRoute, useRouter} from 'vue-router'; 
 export default defineComponent({
     components: {
     DownloadOutlined,
@@ -102,28 +98,44 @@ export default defineComponent({
                 { required: true, message: 'The Address cannot be empty', trigger: 'blur' }
             ]
         },
-        donatedBloods: []
+        donatedBloods: [],
+        db: ""
       }
-  },
-  methods: {
-      async handleSubmit (name) {
-        let existingObj = this;
-        await this.$refs[name].validate((valid) => {
-            if (valid) {
-                    axios.post(`/api/admin/getDonatedBlood`, this.formValidate)
-                    .then(function (response) {
-                        console.log(response.data);
-                        existingObj.donatedBloods = response.data
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            } else {
-            }
-            
-        })
-          
-      }
+    },
+    methods: {
+        async handleSubmit (name) {
+            let existingObj = this;
+            await this.$refs[name].validate((valid) => {
+                if (valid) {
+                        axios.post(`/api/admin/getDonatedBlood`, this.formValidate)
+                        .then(function (response) {
+                            existingObj.donatedBloods = response.data
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                } else {
+                }
+                
+            })
+        },
+        chatNow(donatedBlood){
+            let existingObj = this;
+            existingObj.db = donatedBlood
+            axios.post(`/api/admin/chatNow`, existingObj.db)
+            .then(function (response) {
+                console.log(response.data);
+                existingObj.$router.push({path: '/chatbox/'})
+                // this.$router.push({path: '/admin/userPlatform/editForm/' + response.data})
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+    },
+    created(){
+        this.token = window.Laravel.csrfToken;
+        // console.log(this.token);
     },
     beforeRouteEnter(to, from, next) {
         if(window.Laravel.userType == 'Admin'){
@@ -131,5 +143,17 @@ export default defineComponent({
         }
         next();    
     }
+    
 })
 </script>
+
+<style scoped>
+.bgImage {
+    background-image: url('/img/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #FFFFFF;
+}
+</style>
+

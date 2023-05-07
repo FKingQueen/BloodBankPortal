@@ -42,5 +42,18 @@ class UserSeeder extends Seeder
             'email' => 'h@gmail.com',
             'password' => Hash::make('12345678'),
         ]);
+        DB::table('users')->insert([
+            'firstName' => 'Sample',
+            'LastName' => 'Sample',
+            'middleInitial' => 'S',
+            'userType' => 'User',
+            'age' => '23',
+            'address' => 'Amlan (Ayuquitan)',
+            'gender' => 'Female',
+            'bloodType' => 'A+',
+            'phoneNumber' => '09053102687',
+            'email' => 's@gmail.com',
+            'password' => Hash::make('12345678'),
+        ]);
     }
 }

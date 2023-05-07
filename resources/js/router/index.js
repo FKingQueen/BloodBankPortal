@@ -5,7 +5,8 @@ import {createWebHistory, createRouter} from "vue-router";
 import home from '../components/user/homePage/home.vue';
 import donateBlood from '../components/user/homePage/donateBlood.vue';
 import findBlood from '../components/user/homePage/findBlood.vue';
-import chatbox from '../components/user/chatbox.vue';
+
+import chatBox from '../components/user/chatbox.vue';
 
 // Admin
 import userPlatform from '../components/admin/user/userPlatform.vue';
@@ -13,9 +14,6 @@ import editUserForm from '../components/admin/user/editForm.vue';
 
 // User Approval
 import userApprovalPlatform from '../components/admin/userApproval/userApprovalPlatform.vue';
-
-// Settings
-import setting from '../components/admin/settings/setting.vue';
 
 // Login
 import login from '../components/login.vue';
@@ -38,23 +36,6 @@ export const routes = [
         path: '/register',
         component: register,
     },
-    // {
-    //     path: '/portal',
-    //     component: portal,
-    //     children:[
-    //         {
-    //             name: 'home',
-    //             path: '/portal/home',
-    //             component: home,
-    //         },
-    //         {
-    //             name: 'chatbox',
-    //             path: '/portal/chatbox',
-    //             component: chatbox,
-    //         },
-    //     ]
-    // },
-
     {
         path: '/',
         component: dashboard,
@@ -77,9 +58,10 @@ export const routes = [
                 component: findBlood,
             },
             {
-                name: 'chatbox',
-                path: '/chatbox',
-                component: chatbox,
+                name: 'chatBox',
+                path: '/chatBox',
+                component: chatBox,
+  
             },
 
             // Admin
@@ -101,12 +83,6 @@ export const routes = [
                 path: '/admin/userPlatform/editForm/:id',
                 component: editUserForm,  
                 props:true
-            },
-            // Settings
-            {
-                name: 'setting',
-                path: '/admin/setting',
-                component: setting  
             },
         ]
     },
