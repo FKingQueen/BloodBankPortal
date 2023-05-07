@@ -30,6 +30,7 @@
                     'isLoggedin' => true,
                     'userType' => Auth::user()->userType,
                     'user' => Auth::user(),
+                    'currentRoom' => "",
                     'csrfToken' =>  csrf_token() ,
                 ])!!}
             </script>

@@ -62,7 +62,7 @@
                         <h1 v-if="donatedBloods!=''" class="text-lg">Result:</h1>
                         <div class="grid grid-cols-2  gap-4">
                             <div v-for='(donatedBlood, index) in donatedBloods' :key='donatedBlood.id' class="text-end border-2 p-2">
-                                <p class="mt-1 text-black">Address: <a-tag color="green">{{ donatedBlood.address }}</a-tag> </p>
+                                <p class="mt-1 text-black">Address: <a-tag color="green">{{ donatedBlood.address }} {{ donatedBlood.id }}</a-tag> </p>
                                 <p class="mt-1 text-black">Blood Type:  <a-tag color="red">{{ donatedBlood.bloodType }}</a-tag> </p>
                                 <Button :size="buttonSize" v-on:click="chatNow(donatedBlood)" type="dashed" class="mt-1 mr-2">Chat Now!</Button>
                             </div>
@@ -124,8 +124,8 @@ export default defineComponent({
             existingObj.db = donatedBlood
             axios.post(`/api/admin/chatNow`, existingObj.db)
             .then(function (response) {
-                console.log(response.data);
                 existingObj.$router.push({path: '/chatbox/'})
+                window.Laravel.currentRoom = response.data;
                 // this.$router.push({path: '/admin/userPlatform/editForm/' + response.data})
             })
             .catch(function (error) {

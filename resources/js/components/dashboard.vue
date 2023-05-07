@@ -85,10 +85,13 @@
         <!-- Header -->
         <div class=" w-full flex items-center justify-between bg-gray-300 h-14  z-10">
           <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 ">
+            <div>
+              <img src="/img/bloodDrop.png" alt="" class="object-cover w-10 px-2">
+            </div>
             <span class="hidden md:block ">PORTAL</span>
           </div>
           <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 ">
-                <router-link to="/home" class="text-black relative flex flex-row items-center h-12 focus:outline-none hover:text-black border-b-4 border-transparent hover:border-blue-500 p-6">
+                <router-link to="/home" :class="{ active: activeItem}" class="text-black relative flex flex-row items-center h-12 focus:outline-none hover:text-black border-b-4 border-transparent hover:border-blue-500 p-6">
                   <span class="">HOME</span>
                 </router-link>
                 <router-link v-if="isRoom" to="/chatBox" class="text-black relative flex flex-row items-center h-12 focus:outline-none hover:text-black border-b-4 border-transparent hover:border-blue-500 p-6">
@@ -130,16 +133,23 @@ export default defineComponent({
     const isAdmin = ref(false);
     const isUser = ref(false);
     const isRoom = ref(false);
+    const activeItem = ref(false);
     return{
       isAdmin,
       isUser,
       userName: '',
       isRoom,
+      activeItem,
     }
   },
   watch:{
     $route (to, from){
       let existingObj = this;
+      if(to.path == "/donateBlood" ||  to.path == "/findBlood" ){
+        existingObj.activeItem = true;
+      }else {
+        existingObj.activeItem = false;
+      }
       axios.get('/api/admin/checkRooms')
       .then(function (response) {
         if(response.data != ""){
@@ -198,4 +208,11 @@ export default defineComponent({
     border-bottom: 4px solid rgb(59 130 246);
 }
 
+</style>
+
+<style  scoped>
+.active{
+    /* background-color: rgb(156 163 175); */
+    border-bottom: 4px solid rgb(59 130 246);
+}
 </style>

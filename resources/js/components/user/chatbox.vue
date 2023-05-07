@@ -4,23 +4,22 @@
             <div class="flex justify-center w-full rounded-lg">
                 <div class="container mx-auto shadow-lg rounded-lg">
                     <!-- headaer -->
-                    <div class="px-5 py-5 flex justify-between items-center bg-white border-b-2 rounded-t-lg">
-                        <div class="text-2xl text-black">ChatBox</div>
+                    <div class="px-5 py-5 flex justify-between items-center bg-red-900  rounded-t-lg">
+                        <div class="text-2xl text-white">Chat Box</div>
                     </div>
                     <!-- end header -->
                     <!-- Chatting -->
                     <div class="flex flex-row justify-between bg-white rounded-b-lg">
                         <!-- chat list -->
-                        <div class="flex flex-col w-2/6 border-r-2 overflow-y-auto">
-                            <!-- user list -->
-                            <div v-for="(chatRoom, key, index) in this.chatRooms" class="flex flex-row  justify-center items-center ">
-                                <div class="w-full ">
-                                    <!-- <h1 @click="changeCurrentRoom(key)" class="text-lg ml-5 border">{{ chatRoom.userName }}</h1> -->
-                                    <a-button size="large" @click="changeCurrentRoom(key)" class="w-full text-left h-max" block>{{ chatRoom.userName }}</a-button>
-                                </div>
+                        <div class="overflow-y-auto border-l border-r sm:w-64 bg-gray-900 border-gray-700">
+                            <div v-for="(chatRoom, key, index) in this.chatRooms" :class="{ active: key === activeItem}" class="mt-2 space-y-4">
+                                <button @click="changeCurrentRoom(key)" class=" flex items-center w-full px-5 py-2 transition-colors duration-200 hover:bg-gray-800 gap-x-2 focus:outline-none">
+                                    <img class="object-cover w-8 h-8 rounded-full" src="/img/user.png" alt="">  
+                                    <div class="text-left rtl:text-right">
+                                        <h1 class="text-sm font-medium capitalize text-white">{{ chatRoom.userName }}</h1>
+                                    </div>
+                                </button>
                             </div>
-                            
-                            <!-- end user list -->
                         </div>
                         <!-- end chat list -->
                         <!-- message -->
@@ -85,8 +84,10 @@
 import { defineComponent, ref, onMounted, h } from 'vue';
 export default defineComponent({
     data(){
+        // const isActive = ref(false);
         return{
             userId: '',
+            activeItem: null,
             chatRooms: [],
             currentRoom: [],
             messages: [],
@@ -106,6 +107,7 @@ export default defineComponent({
         changeCurrentRoom(key){
             let existingObj = this
             existingObj.currentRoom = existingObj.chatRooms[key]
+            this.activeItem = key;
         },
         connect(){
             let existingObj = this;
@@ -141,8 +143,19 @@ export default defineComponent({
             await axios.get('/api/admin/rooms')
                 .then(function (response) {
                 existingObj.chatRooms = response.data
-                console.log(existingObj.chatRooms);
-                existingObj.currentRoom = response.data[0]
+                if(window.Laravel.currentRoom!="")
+                {
+                    for(let i=0; i<=response.data.length; i++){
+                        if(window.Laravel.currentRoom==response.data[i].id){
+                            existingObj.currentRoom = response.data[i]
+                            existingObj.activeItem = i;
+                            return;
+                        }
+                    }
+                } else {
+                    existingObj.currentRoom = response.data[0]
+                    existingObj.activeItem = 0;
+                }
                 })
                 .catch(function (error) {
             });
@@ -210,6 +223,13 @@ export default defineComponent({
     background-attachment: fixed;
     background-size: cover;
     color: #FFFFFF;
+}
+</style>
+
+<style  scoped>
+.active{
+    /* background-color: rgb(156 163 175); */
+    border-bottom: 4px solid rgb(59 130 246);
 }
 </style>
 
