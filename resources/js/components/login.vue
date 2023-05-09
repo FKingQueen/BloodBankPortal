@@ -1,8 +1,7 @@
 <template class="">
   <div class="h-screen bgImage">
     <div class="text-center pt-40">
-      <h1 class="text-2xl font-bold text-white">NEGROS ORIENTAL PROVINCIAL HOSPITAL BLOOD BANK</h1>
-      <h1 class="text-2xl font-bold text-white">PORTAL</h1>
+      <h1 class="text-2xl font-bold text-white">Web Portal for Blood Bank in Negros Oriental Provincial Hospital</h1>
     </div>
     <div class="flex justify-center pt-20">
         <div class="w-full flex flex-col items-center ">

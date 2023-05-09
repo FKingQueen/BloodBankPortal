@@ -165,18 +165,16 @@ export default defineComponent({
       axios.get('/sanctum/csrf-cookie').then(response => {
         axios.post('/api/logout')
         .then(response => {
-                window.Laravel.isLoggedin = false
-                this.$router.push({path: '/'})
+          window.Laravel.isLoggedin = false
+          this.$router.push({path: '/'})
         })
         .catch(function (error) {
             console.error(error);
         });
       }) 
-      // this.$router.push({path: '/'})
     }
   },
   async created(){
-    // console.log(window.Laravel);
     let existingObj = this;
     this.token = window.Laravel.csrfToken;
     axios.get('/api/admin/checkRooms')
@@ -189,7 +187,6 @@ export default defineComponent({
     });
     await axios.get('/api/admin/getAuth')
       .then(function (response) {
-        // console.log(response.data.userType);
         existingObj.isAdmin = response.data.userType === 'Admin' ? true:false
         existingObj.isUser = response.data.userType === 'User' ? true:false
         existingObj.userName = response.data.firstName
@@ -204,7 +201,6 @@ export default defineComponent({
 
 <style  scoped>
 .router-link-exact-active{
-    /* background-color: rgb(156 163 175); */
     border-bottom: 4px solid rgb(59 130 246);
 }
 
@@ -212,7 +208,6 @@ export default defineComponent({
 
 <style  scoped>
 .active{
-    /* background-color: rgb(156 163 175); */
     border-bottom: 4px solid rgb(59 130 246);
 }
 </style>

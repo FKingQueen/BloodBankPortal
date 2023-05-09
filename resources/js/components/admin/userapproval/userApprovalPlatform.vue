@@ -159,11 +159,8 @@ export default defineComponent({
   },
   methods: {
     remove(key){
-      // this.articles.value = this.articles.value.filter(item => item.key !== key);
       let id = this.users[key].id
       this.users.splice(key, 1);
-      // let id = this.articles[key]
-
       axios.post(`/api/admin/deleteArticle/${id}`)
       .then(function (response) {
         notification.success({
@@ -235,6 +232,12 @@ export default defineComponent({
     .catch(function (error) {
 
     });
+  },
+  beforeRouteEnter(to, from, next) {
+      if(window.Laravel.userType == 'User'){
+          next({ path: from.path });
+      }
+      next();    
   }
   
 })

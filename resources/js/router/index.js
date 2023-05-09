@@ -99,7 +99,7 @@ router.beforeEach((to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)){
         if(!window.Laravel.isLoggedin){
             next({
-                name: "login"
+                name: "/register"
             })
         }
          else {

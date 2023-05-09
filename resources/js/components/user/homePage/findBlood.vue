@@ -1,7 +1,7 @@
 <template>
     <div class="h-screen bgImage">
         <div class="flex justify-center p-10">
-            <h1 class="text-2xl font-bold text-white">NEGROS ORIENTAL PROVINCIAL HOSPITAL BLOOD BANK PORTAL</h1>
+            <h1 class="text-2xl font-bold text-white uppercase">Web Portal for Blood Bank in Negros Oriental Provincial Hospital</h1>
         </div>
         <div class="flex justify-center">
             <h1 class="text-lg font-base text-white">Looking for Blood</h1>
@@ -126,7 +126,6 @@ export default defineComponent({
             .then(function (response) {
                 existingObj.$router.push({path: '/chatbox/'})
                 window.Laravel.currentRoom = response.data;
-                // this.$router.push({path: '/admin/userPlatform/editForm/' + response.data})
             })
             .catch(function (error) {
                 console.log(error);
@@ -135,7 +134,6 @@ export default defineComponent({
     },
     created(){
         this.token = window.Laravel.csrfToken;
-        // console.log(this.token);
     },
     beforeRouteEnter(to, from, next) {
         if(window.Laravel.userType == 'Admin'){

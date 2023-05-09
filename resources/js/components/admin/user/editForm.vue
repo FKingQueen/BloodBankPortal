@@ -118,7 +118,6 @@
               callback(new Error('Please enter your password'));
           } else {
               if (this.formValidate.passwdCheck !== '') {
-                  // 对第二个密码框单独验证
                   this.$refs.formValidate.validateField('passwdCheck');
               }
               callback();
@@ -246,7 +245,7 @@
                     })
                     .catch(function (error) {
                         if (error.response.data.errors.passwd) {
-                            console.log(error.response.data.errors);
+
                             notification.error({
                                 message: 'Notification',
                                 description: error.response.data.errors.passwd,
@@ -265,7 +264,6 @@
         let existingObj = this;
         await axios.get(`/api/admin/getUserEdit/${id}`)
         .then(function (response) {
-            
             existingObj.formValidate.userType = response.data.userType
             existingObj.formValidate.id = response.data.id
             existingObj.formValidate.firstName = response.data.firstName  
@@ -283,7 +281,14 @@
         .catch(function (error) {
             console.log(error)
         });
+    },
+    beforeRouteEnter(to, from, next) {
+        if(window.Laravel.userType == 'User'){
+            next({ path: from.path });
+        }
+        next();    
     }
+
   })
   </script>
   

@@ -171,7 +171,6 @@ export default defineComponent({
       });
     },
     editForm(id){
-      // console.log(id);
       this.$router.push({path: '/admin/userPlatform/editForm/' + id})
     },
   },
@@ -192,6 +191,12 @@ export default defineComponent({
           this.formValidate.image = image
         }
     });
+  },
+  beforeRouteEnter(to, from, next) {
+      if(window.Laravel.userType == 'User'){
+          next({ path: from.path });
+      }
+      next();    
   }
   
 })

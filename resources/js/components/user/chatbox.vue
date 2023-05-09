@@ -27,15 +27,6 @@
                             <div class="flex flex-col mt-5">
                                 <div class="">
                                     <div class="flex-1 p:2 sm:p-6 justify-between flex flex-col  h-[45rem]">
-                                        <!-- <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
-                                            <div class="relative flex items-center space-x-4">
-                                                <div class="flex flex-col leading-tight">
-                                                    <div class="text-2xl flex items-center">
-                                                    <span class="text-gray-700 mr-3">Username</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                         <div id="messages" class="flex flex-col flex-col-reverse  p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
                                             <!-- Messages -->
                                                 <div v-for="(message, key, index) in this.messages" class="chat-message">
@@ -84,7 +75,6 @@
 import { defineComponent, ref, onMounted, h } from 'vue';
 export default defineComponent({
     data(){
-        // const isActive = ref(false);
         return{
             userId: '',
             activeItem: null,

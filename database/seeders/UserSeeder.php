@@ -17,42 +17,16 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'firstName' => 'Patrick',
-            'LastName' => 'Borja',
-            'middleInitial' => 'C',
+            'firstName' => 'Super',
+            'LastName' => 'Admin',
+            'middleInitial' => 'A',
             'userType' => 'Admin',
             'age' => '23',
             'address' => 'Amlan (Ayuquitan)',
             'gender' => 'Male',
             'bloodType' => 'A+',
-            'phoneNumber' => '09053102687',
-            'email' => 'p@gmail.com',
-            'password' => Hash::make('12345678'),
-        ]);
-        DB::table('users')->insert([
-            'firstName' => 'Hisiah',
-            'LastName' => 'Nidoy',
-            'middleInitial' => 'B',
-            'userType' => 'User',
-            'age' => '23',
-            'address' => 'Amlan (Ayuquitan)',
-            'gender' => 'Female',
-            'bloodType' => 'A+',
-            'phoneNumber' => '09053102687',
-            'email' => 'h@gmail.com',
-            'password' => Hash::make('12345678'),
-        ]);
-        DB::table('users')->insert([
-            'firstName' => 'Sample',
-            'LastName' => 'Sample',
-            'middleInitial' => 'S',
-            'userType' => 'User',
-            'age' => '23',
-            'address' => 'Amlan (Ayuquitan)',
-            'gender' => 'Female',
-            'bloodType' => 'A+',
-            'phoneNumber' => '09053102687',
-            'email' => 's@gmail.com',
+            'phoneNumber' => '09123456789',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('12345678'),
         ]);
     }
