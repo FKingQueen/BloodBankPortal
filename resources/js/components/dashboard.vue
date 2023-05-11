@@ -166,6 +166,7 @@ export default defineComponent({
         axios.post('/api/logout')
         .then(response => {
           window.Laravel.isLoggedin = false
+          window.Laravel.userType = ''
           this.$router.push({path: '/'})
         })
         .catch(function (error) {

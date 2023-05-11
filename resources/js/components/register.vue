@@ -20,13 +20,13 @@
 
                     <FormItem label="Address" prop="address">
                         <Select v-model="formValidate.address" placeholder="Select your Municipality/City">
-                            <Option value="Amlan (Ayuquitan)">Amlan (Ayuquitan)</Option>
+                            <Option value="Amlan">Amlan</Option>
                             <Option value="Ayungon">Ayungon</Option>
                             <Option value="Bacong">Bacong</Option>
                             <Option value="Bais">Bais</Option>
                             <Option value="Bais">Bais</Option>
-                            <Option value="Bayawan (Tolong)">Bayawan (Tolong)</Option>
-                            <Option value="Bindoy (Payabon)">Bindoy (Payabon)</Option>
+                            <Option value="Bayawan">Bayawan</Option>
+                            <Option value="Bindoy">Bindoy</Option>
                             <Option value="Canlaon">Canlaon</Option>
                             <Option value="Dauin">Dauin</Option>
                             <Option value="Dumaguete">Dumaguete</Option>
@@ -41,7 +41,7 @@
                             <Option value="Sibulan">Sibulan</Option>
                             <Option value="Tanjay">Tanjay</Option>
                             <Option value="Tayasan">Tayasan</Option>
-                            <Option value="Valencia (Luzurriaga)">Valencia (Luzurriaga)</Option>
+                            <Option value="Valencia">Valencia</Option>
                             <Option value="Vallehermoso">Vallehermoso</Option>
                             <Option value="Zamboanguita">Zamboanguita</Option>
                         </Select>

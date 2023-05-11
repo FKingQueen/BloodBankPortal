@@ -30,5 +30,9 @@ class HomeController extends Controller
         return $donatedBlood;
     }
 
+    public function checkDonatedBlood(){
+        $donatedBlood =  DonateBlood::where('user_id', Auth::user()->id)->get();
 
+        return $donatedBlood;
+    }
 }

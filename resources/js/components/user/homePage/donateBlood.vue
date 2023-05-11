@@ -106,20 +106,24 @@ export default defineComponent({
         let existingObj = this;
         await this.$refs[name].validate((valid) => {
             if (valid) {
-                    axios.post(`/api/admin/storeDonateBlood`, this.formValidate)
-                    .then(function (response) {
-                        Modal.success({
-                            title: 'Submission is Complete!',
-                            content: h('div', {}, [h('p', 'Please contact this Phone Number'),h('a', '09123456789'),h('p', 'for next process. Thank You!')]),
+                    if(this.formValidate.weight <= 50 || this.formValidate.hourSleep == 0 || this.formValidate.drugUser == 0 || this.formValidate.alcoholic == 0){
+                        notification.error({
+                            message: 'Notification',
+                            description: 'Based on the data inputs, you are not eligible to donate blood',
                         });
-                        existingObj.$router.push('/home');
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-
-                    
-            } else {
+                    } else {
+                        axios.post(`/api/admin/storeDonateBlood`, this.formValidate)
+                        .then(function (response) {
+                            Modal.success({
+                                title: 'Submission is Complete!',
+                                content: h('div', {}, [h('p', 'Please contact this Phone Number'),h('a', '09123456789'),h('p', 'for next process. Thank You!')]),
+                            });
+                            existingObj.$router.push('/home');
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                    }  
             }
             
         })

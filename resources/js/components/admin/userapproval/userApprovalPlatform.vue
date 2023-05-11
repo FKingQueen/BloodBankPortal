@@ -180,6 +180,7 @@ export default defineComponent({
         axios.post(`/api/admin/userApproved/${id}`)
         .then(function (response) {
           existingObj.users.splice(key, 1);
+          existingObj.modal = false;
         })
         .catch(function (error) {
           console.log(error);

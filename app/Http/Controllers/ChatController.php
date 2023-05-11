@@ -41,7 +41,7 @@ class ChatController extends Controller
         foreach($getRoom1 as $key1 => $getR1){
             foreach($users as $key2 => $user){
                 if($getR1->user2_id == $user->id){
-                    $getRoom1[$key1]->userName =  $user->firstName.' '.$user->middleInitial.'. '.$user->lastName;
+                    $getRoom1[$key1]->address =  $user->address;
                 }
             };
         };
@@ -50,7 +50,7 @@ class ChatController extends Controller
         foreach($getRoom2 as $key1 => $getR2){
             foreach($users as $key2 => $user){
                 if($getR2->user1_id == $user->id){
-                    $getRoom2[$key1]->userName =  $user->firstName.' '.$user->middleInitial.' '.$user->lastName;
+                    $getRoom2[$key1]->address =  $user->address;
                 }
             };
         };

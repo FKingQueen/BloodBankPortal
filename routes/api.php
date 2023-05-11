@@ -44,6 +44,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:sanctum'], function() {
 
     // User
     Route::post('/storeDonateBlood', [HomeController::class, 'storeDonateBlood']);
+    Route::get('/checkDonatedBlood', [HomeController::class, 'checkDonatedBlood']);
     Route::post('/getDonatedBlood', [HomeController::class, 'getDonatedBlood']);
     // Chat
     Route::post('/chatNow', [ChatController::class, 'chatNow']);

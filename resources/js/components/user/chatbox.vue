@@ -14,9 +14,12 @@
                         <div class="overflow-y-auto border-l border-r sm:w-64 bg-gray-900 border-gray-700">
                             <div v-for="(chatRoom, key, index) in this.chatRooms" :class="{ active: key === activeItem}" class="mt-2 space-y-4">
                                 <button @click="changeCurrentRoom(key)" class=" flex items-center w-full px-5 py-2 transition-colors duration-200 hover:bg-gray-800 gap-x-2 focus:outline-none">
-                                    <img class="object-cover w-8 h-8 rounded-full" src="/img/user.png" alt="">  
+                                    <div class="relative">
+                                        <img class="w-10 h-10 rounded-full" src="/img/user.png" alt="">  
+                                        <span class="hidden top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
+                                    </div>
                                     <div class="text-left rtl:text-right">
-                                        <h1 class="text-sm font-medium capitalize text-white">{{ chatRoom.userName }}</h1>
+                                        <h1 class="text-sm font-medium capitalize text-white">{{ chatRoom.address }}</h1>
                                     </div>
                                 </button>
                             </div>
@@ -48,12 +51,11 @@
                                                 <input v-model="form.message" type="text" placeholder="Write your message!" class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3">
                                                 <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
                                                     <button type="button" @click="handleSubmit()"  class="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
-                                                    <span class="font-bold">Send</span>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6 ml-2 transform rotate-90">
-                                                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-                                                    </svg>
+                                                        <span class="font-bold">Send</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6 ml-2 transform rotate-90">
+                                                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+                                                        </svg>
                                                     </button>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -132,6 +134,7 @@ export default defineComponent({
             let existingObj = this;
             await axios.get('/api/admin/rooms')
                 .then(function (response) {
+                    console.log(response);
                 existingObj.chatRooms = response.data
                 if(window.Laravel.currentRoom!="")
                 {

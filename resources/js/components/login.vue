@@ -134,6 +134,7 @@ export default defineComponent({
     }
   },
   async created(){
+    console.log(window.Laravel);
     if(window.Laravel.isLoggedin){
       this.$router.go(-1)
     }
