@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\UserApproval;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailNotify;
 
 class UserApprovalController extends Controller
 {
@@ -33,12 +35,18 @@ class UserApprovalController extends Controller
             'password' => $newUser->password,
         ]);
 
+        $valid = 0;
+        $this->approvedRegistration($newUser->email,$valid);
+
         if($status){
             $User = UserApproval::find($id);
             $User->delete();
         }
 
         return;
+    }
+    public function approvedRegistration($email, $validate){
+        Mail::to($email)->send(new MailNotify($validate));
     }
 
     public function userDisapproved ($id){

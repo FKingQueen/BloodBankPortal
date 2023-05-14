@@ -1,5 +1,6 @@
 <template>
   <div class="p-2">
+
     <div class="m-5 bg-white shadow-inner shadow-lg rounded px-10 py-5">
       <div class="flex justify-center text-2xl mb-3">
         User Approval Management
@@ -90,16 +91,22 @@
 
       </a-table>
     </div>
+
+    <loading v-model:active="isLoading"
+                 :is-full-page="true"/>
   </div>
 </template>
 <script>
 import { notification } from 'ant-design-vue';
 import { SearchOutlined } from '@ant-design/icons-vue';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 import { defineComponent, reactive, ref, toRefs } from 'vue';
 
 export default defineComponent({
   components: {
     SearchOutlined,
+    Loading
   },
   setup() {
     const state = reactive({
@@ -150,6 +157,7 @@ export default defineComponent({
       state.searchText = '';
     };
     return {
+      isLoading: ref(false),
       columns,
       handleSearch,
       handleReset,
@@ -176,14 +184,17 @@ export default defineComponent({
     approve(key){
       let existingObj = this;
       let id = this.users[key].id
+      existingObj.isLoading = true;
       axios.get('/sanctum/csrf-cookie').then(response => {
         axios.post(`/api/admin/userApproved/${id}`)
         .then(function (response) {
           existingObj.users.splice(key, 1);
           existingObj.modal = false;
+          existingObj.isLoading = false;
         })
         .catch(function (error) {
           console.log(error);
+          existingObj.isLoading = false;
         });
       });
 

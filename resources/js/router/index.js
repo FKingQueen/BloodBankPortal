@@ -17,6 +17,9 @@ import userApprovalPlatform from '../components/admin/userApproval/userApprovalP
 
 // Login
 import login from '../components/login.vue';
+ 
+import forgotPassword from '../components/forgotPassword.vue';
+import resetPassword from '../components/resetPassword.vue';
 
 // Dashboard
 import dashboard from '../components/dashboard.vue';
@@ -30,6 +33,16 @@ export const routes = [
         name: 'login',
         path: '/',
         component: login,
+    },
+    {
+        name: 'forgotPassword',
+        path: '/forgotPassword',
+        component: forgotPassword,
+    },
+    {
+        name: 'resetPassword',
+        path: '/resetPassword/:token',
+        component: resetPassword,
     },
     {
         name: 'register',

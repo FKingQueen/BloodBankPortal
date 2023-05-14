@@ -204,7 +204,7 @@
     },
     methods: {
         async handleSubmit (name) {
-            console.log(this.formValidate);
+            // console.log(this.formValidate);
             let existingObj = this;
             await this.$refs[name].validate((valid) => {
                 if (valid) {
@@ -217,7 +217,13 @@
                         existingObj.$router.push('/');
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        if (error.response.data.errors.email) {
+                            console.log(error.response.data.errors);
+                            notification.error({
+                                message: 'Notification',
+                                description: error.response.data.errors.email,
+                            });
+                        }
                     });
                 } else {
                 }

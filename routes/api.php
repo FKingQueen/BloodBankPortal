@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\UserApprovalController;
 use App\Http\Controllers\Home\HomeController;  
 use App\Http\Controllers\RegistrationController;  
 use App\Http\Controllers\ChatController;  
+use App\Http\Controllers\MailController;  
+use App\Http\Controllers\NewPasswordController;  
+
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +64,13 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:sanctum'], function() {
 
 Route::post('/uploadid', [RegistrationController::class, 'uploadid']);
 Route::post('/deleteImageReg', [RegistrationController::class, 'deleteImageReg']);
+
+// Forgot Password
+
+Route::post('/forgotPassword', [NewPasswordController::class, 'forgotPassword']);
+Route::post('/reset', [NewPasswordController::class, 'reset']);
+
+
 
 
 

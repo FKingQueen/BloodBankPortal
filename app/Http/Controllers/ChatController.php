@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\ChatMessage;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NewChatMessage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailNotify;
 use DB;
 
 class ChatController extends Controller
@@ -100,26 +102,51 @@ class ChatController extends Controller
             $newRoom->user1_id = Auth::user()->id;
             $newRoom->user2_id = $request->user_id;
             $newRoom->save();
+            
+            $valid = 1;
+            if($newRoom->user1_id == Auth::user()->id){
+                $email = User::where('id', $newRoom->user2_id)->pluck('email');
+            } else if($newRoom->user2_id == Auth::user()->id){
+                $email = User::where('id', $newRoom->user1_id)->pluck('email');
+            }
+            $this->emailChat($email,$valid);
+
             return $newRoom->id;
         } else {
             $findRoom1 = ChatRoom::where('user1_id', Auth::user()->id)->where('user2_id', $request->user_id)->get();
             if(sizeof($findRoom1) != 0){
+
+
                 return $findRoom1[0]->id;
                 
             } else {
                 $findRoom2 = ChatRoom::where('user1_id', $request->user_id)->where('user2_id', Auth::user()->id)->get();
                 if(sizeof($findRoom2) != 0){
+
+
                     return $findRoom2[0]->id;
                 } else {
                     $newRoom = new  ChatRoom;
                     $newRoom->user1_id = Auth::user()->id;
                     $newRoom->user2_id = $request->user_id;
                     $newRoom->save();
+
+                    $valid = 1;
+                    if($newRoom->user1_id == Auth::user()->id){
+                        $email = User::where('id', $newRoom->user2_id)->pluck('email');
+                    } else if($newRoom->user2_id == Auth::user()->id){
+                        $email = User::where('id', $newRoom->user1_id)->pluck('email');
+                    }
+                    $this->emailChat($email,$valid);
+
                     return $newRoom->id;
                 }
             }
         }
 
-        
+    }
+
+    public function emailChat($email, $validate){
+        Mail::to($email)->send(new MailNotify($validate));
     }
 }

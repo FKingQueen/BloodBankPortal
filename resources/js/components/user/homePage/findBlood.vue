@@ -74,6 +74,8 @@
                     </div>
                 </div>
             </div>
+            <loading v-model:active="isLoading"
+                 :is-full-page="true"/>
         </div>
     </template>
 
@@ -81,16 +83,21 @@
     <script>
     import { defineComponent, ref, onMounted, h } from 'vue';
     import { DownloadOutlined } from '@ant-design/icons-vue';
+    import Loading from 'vue-loading-overlay';
+    import 'vue-loading-overlay/dist/css/index.css';
     export default defineComponent({
         components: {
         DownloadOutlined,
+        Loading
     },
     setup(){
         const isActive = ref(false);
+        const isLoading = ref(false);
         const isActiveResult = ref(false);
         return{
             isActive,
-            isActiveResult
+            isActiveResult,
+            isLoading
         }
     },
     data(){
@@ -115,7 +122,6 @@
     },
     methods: {
         async handleSubmit (name) {
-            
             let existingObj = this;
             await this.$refs[name].validate((valid) => {
                 if (valid) {
@@ -138,13 +144,15 @@
         chatNow(donatedBlood){
             let existingObj = this;
             existingObj.db = donatedBlood
+            existingObj.isLoading = true
             axios.post(`/api/admin/chatNow`, existingObj.db)
             .then(function (response) {
-                
                 window.Laravel.currentRoom = response.data;
+                existingObj.isLoading = false
                 existingObj.$router.push({path: '/chatbox/'})
             })
             .catch(function (error) {
+                existingObj.isLoading = false
                 console.log(error);
             });
         },

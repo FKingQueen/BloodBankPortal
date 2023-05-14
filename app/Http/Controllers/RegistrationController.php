@@ -42,7 +42,7 @@ class RegistrationController extends Controller
             'age' => 'required',
             'bloodType' => 'required',
             'phoneNumber' => 'required|min:11|max:11',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users|unique:user_approvals',
             'passwd' => 'required|min:8',
         ]);
 

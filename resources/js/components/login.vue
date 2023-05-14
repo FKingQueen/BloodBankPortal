@@ -42,17 +42,23 @@
                         </a-input-password>
                     </a-form-item>
 
-                    <a-form-item >
-                        <div class="flex justify-between" >
-                            <!-- <a class="login-form-forgot" href="">Forgot password</a> -->
-                            <router-link to="/register" class="ml-2 mt-2">
-                              Register
-                            </router-link>
-                            <a-button  :disabled="disabled"  type="primary" html-type="submit" class="login-form-button">
-                                Login
-                            </a-button>
-                        </div>
-                    </a-form-item>
+                      <div class="justify-end flex">
+                        <a-button  :disabled="disabled"  type="primary" html-type="submit" class="login-form-button">
+                          Login
+                        </a-button>
+                      </div>
+
+                    <div class="flex justify-center" >
+                      <router-link to="/forgotPassword">
+                        Forgot Password?
+                      </router-link>
+                    </div>
+                    <div class="flex justify-center space-x-2" >
+                        <p>No account?</p>
+                        <router-link to="/register">
+                          Register Here
+                        </router-link>
+                    </div>
                 </a-form>
 
             </div>

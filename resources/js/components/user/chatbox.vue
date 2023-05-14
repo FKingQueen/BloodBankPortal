@@ -135,11 +135,9 @@ export default defineComponent({
             await axios.get('/api/admin/rooms')
                 .then(function (response) {
                     // SORT Data base in updated_at column
-                    console.log(response.data);
-                existingObj.chatRooms = response.data
+                    existingObj.chatRooms = response.data
                 if(window.Laravel.currentRoom!=null)
                 {
-                    console.log(window.Laravel.currentRoom);
                     for(let i=0; i<=response.data.length; i++){
                         if(window.Laravel.currentRoom==response.data[i].id){
                             existingObj.currentRoom = response.data[i]
