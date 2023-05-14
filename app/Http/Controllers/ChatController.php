@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\ChatMessage;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NewChatMessage;
+use DB;
 
 class ChatController extends Controller
 {
@@ -31,7 +32,8 @@ class ChatController extends Controller
         $concatenated = $getRoom1->concat( $getRoom2);
          
         $concatenated->all();
-        return $concatenated->all();
+        $sorted = $concatenated->sortByDesc('updated_at');
+        return $sorted->values()->all();
     }
 
     public function rooms(Request $request)
@@ -54,10 +56,12 @@ class ChatController extends Controller
                 }
             };
         };
-        $concatenated = $getRoom1->concat( $getRoom2);
-         
-        $concatenated->all();
-        return $concatenated->all();
+        $concatenated = $getRoom1->concat( $getRoom2);  
+
+        $sorted = $concatenated->sortByDesc('updated_at');
+ 
+        // $sorted->values()->all();
+        return $sorted->values()->all();
     }
     
     public function messages(Request $request, $roomId) 
@@ -76,6 +80,12 @@ class ChatController extends Controller
         $newMessage->chat_room_id = $roomId;
         $newMessage->message = $request->message;
         $newMessage->save();
+
+        DB::table('chat_rooms')
+        ->where('id', $roomId)
+        ->update([
+        'updated_at' => $newMessage->created_at,
+        ]);
 
         broadcast(new NewChatMessage( $newMessage ))->toOthers();
 

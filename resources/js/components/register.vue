@@ -46,7 +46,7 @@
                             <Option value="Zamboanguita">Zamboanguita</Option>
                         </Select>
                     </FormItem>
-
+                    
                     <FormItem label="E-mail" prop="email">
                         <Input v-model="formValidate.email" placeholder="Enter your e-mail"></Input>
                     </FormItem>
@@ -72,7 +72,6 @@
                             :on-success="handleSuccess"
                             :on-error="handleError"
                             :format="['jpg','jpeg','png']"
-                            :max-size="2048"
                             :on-format-error="handleFormatError"
                             :on-exceeded-size="handleMaxSize"
                             action="/api/uploadid">
