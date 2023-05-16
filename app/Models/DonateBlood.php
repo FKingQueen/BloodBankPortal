@@ -15,6 +15,7 @@ class DonateBlood extends Model
         'hourSleep',
         'drugUser',
         'alcoholic',
+        'db3',
         'cardHolder',
         'weight'
     ];

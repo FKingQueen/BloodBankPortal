@@ -56,7 +56,7 @@
                     <div class="flex justify-center space-x-2" >
                         <p>No account?</p>
                         <router-link to="/register">
-                          Register Here
+                          RegisterHere
                         </router-link>
                     </div>
                 </a-form>
@@ -112,6 +112,7 @@ export default defineComponent({
         await axios.get('/sanctum/csrf-cookie').then(response => {
             axios.post('api/login', this.formState)
             .then(response => {
+                console.log(response.data);
                 if(response.data.auth == "success"){
                 notification.success({
                     message: 'Notification',
@@ -123,6 +124,11 @@ export default defineComponent({
                         description: 'Incorrect Login Details',
                     });
                     return;
+                } else if(response.data == "approval"){
+                    notification.info({
+                        message: 'Notification',
+                        description: 'Wait for the approval of the Admin, You can check the approval notice through your email. Thankyou',
+                    });
                 }
                 window.Laravel.isLoggedin = true
 

@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'middleInitial' => 'A',
             'userType' => 'Admin',
             'age' => '23',
-            'address' => 'Amlan (Ayuquitan)',
+            'address' => 'Amlan',
             'gender' => 'Male',
             'bloodType' => 'A+',
             'phoneNumber' => '09123456789',

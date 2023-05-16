@@ -12,6 +12,7 @@ class HomeController extends Controller
 {
     public function storeDonateBlood(Request $request)
     {
+        // return $request->all();
         DonateBlood::create([
             'user_id' => Auth::user()->id,
             'address' => Auth::user()->address,
@@ -19,6 +20,7 @@ class HomeController extends Controller
             'alcoholic' => $request->alcoholic,
             'cardHolder' => $request->cardHolder,
             'drugUser' => $request->drugUser,
+            'db3' => $request->db3,
             'hourSleep' => $request->hourSleep,
             'weight' => $request->weight,
         ]);

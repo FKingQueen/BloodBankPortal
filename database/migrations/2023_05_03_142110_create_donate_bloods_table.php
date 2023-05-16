@@ -21,6 +21,7 @@ class CreateDonateBloodsTable extends Migration
             $table->boolean('hourSleep');
             $table->boolean('drugUser');
             $table->boolean('alcoholic');
+            $table->boolean('db3');
             $table->boolean('cardHolder');
             $table->double('weight', 8, 2);
             $table->timestamps();

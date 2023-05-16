@@ -204,7 +204,6 @@
     },
     methods: {
         async handleSubmit (name) {
-            // console.log(this.formValidate);
             let existingObj = this;
             await this.$refs[name].validate((valid) => {
                 if (valid) {
@@ -212,7 +211,7 @@
                     .then(function (response) {
                         notification.success({
                             message: 'Notification',
-                            description: 'You are Successfully Register, Kindly wait for the approval of the admin',
+                            description: 'You are Successfully Register, Kindly wait for the approval of the admin, You can check the approval notice through your email. Thankyou',
                         });
                         existingObj.$router.push('/');
                     })

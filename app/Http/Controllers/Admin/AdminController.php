@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserApproval;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\RelationNotFoundException;
@@ -22,6 +23,12 @@ class AdminController extends Controller
     }
     public function login(Request $request)
     {
+        $email = UserApproval::where('email', $request->email)->get();
+        if($email->isNotEmpty()){
+            if($request->email == $email[0]->email){
+                return "approval";
+            }
+        } 
 
         $validated = $request->validate([
             'email' => 'required',

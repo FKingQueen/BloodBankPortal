@@ -40,6 +40,12 @@
                             <Option value="0">No</Option>
                         </Select>
                     </FormItem>
+                    <FormItem label="Did you donate blood 3 months ago?" prop="db3">
+                        <Select v-model="formValidate.db3" placeholder="Select Option">
+                            <Option value="1">Yes</Option>
+                            <Option value="0">No</Option>
+                        </Select>
+                    </FormItem>
                     <FormItem label="Are you a card holder in Red Cross?" prop="cardHolder">
                         <Select v-model="formValidate.cardHolder" placeholder="Select Option">
                             <Option value="1">Yes</Option>
@@ -75,6 +81,7 @@ export default defineComponent({
               hourSleep: '',
               drugUser: '',
               alcoholic: '',
+              db3: '',
               cardHolder: '',
               weight: '',
           },
@@ -91,6 +98,9 @@ export default defineComponent({
                 alcoholic: [
                     { required: true, message: 'This Section cannot be empty', trigger: 'blur' }
                 ],
+                db3: [
+                    { required: true, message: 'This Section cannot be empty', trigger: 'blur' }
+                ],
                 cardHolder: [
                     { required: true, message: 'This Section cannot be empty', trigger: 'blur' }
                 ],
@@ -102,11 +112,10 @@ export default defineComponent({
   },
   methods: {
       async handleSubmit (name) {
-
         let existingObj = this;
         await this.$refs[name].validate((valid) => {
             if (valid) {
-                    if(this.formValidate.weight <= 50 || this.formValidate.hourSleep == 0 || this.formValidate.drugUser == 0 || this.formValidate.alcoholic == 0){
+                    if(this.formValidate.weight <= 50 || this.formValidate.hourSleep == 0 || this.formValidate.drugUser == 1 || this.formValidate.alcoholic == 1 || this.formValidate.db3 == 1){
                         notification.error({
                             message: 'Notification',
                             description: 'Based on the data inputs, you are not eligible to donate blood',
@@ -116,7 +125,7 @@ export default defineComponent({
                         .then(function (response) {
                             Modal.success({
                                 title: 'Submission is Complete!',
-                                content: h('div', {}, [h('p', 'Please contact this Phone Number'),h('a', '09123456789'),h('p', 'for next process. Thank You!')]),
+                                content: h('div', {}, [h('p', 'Please wait for a patient matching your blood type or contact this Phone Number'),h('a', '09123456789'),h('p', 'for next process. Thank You!')]),
                             });
                             existingObj.$router.push('/home');
                         })
