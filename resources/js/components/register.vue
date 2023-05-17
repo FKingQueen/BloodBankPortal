@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="w-full h-screen">
         <div class="text-center mt-10 ">
             <h1 class="text-2xl font-bold">NEGROS ORIENTAL PROVINCIAL HOSPITAL BLOOD BANK</h1>
             <h1 class="text-2xl font-bold">PORTAL</h1>
@@ -24,7 +24,7 @@
                             <Option value="Ayungon">Ayungon</Option>
                             <Option value="Bacong">Bacong</Option>
                             <Option value="Bais">Bais</Option>
-                            <Option value="Bais">Bais</Option>
+                            <Option value="Basay">Basay</Option>
                             <Option value="Bayawan">Bayawan</Option>
                             <Option value="Bindoy">Bindoy</Option>
                             <Option value="Canlaon">Canlaon</Option>

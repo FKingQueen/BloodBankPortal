@@ -15,6 +15,10 @@ import editUserForm from '../components/admin/user/editForm.vue';
 // User Approval
 import userApprovalPlatform from '../components/admin/userApproval/userApprovalPlatform.vue';
 
+// Donated Blood
+import donatedBloodPlatform from '../components/admin/donatedBlood/donatedBloodPlatform.vue';
+
+
 // Login
 import login from '../components/login.vue';
  
@@ -84,7 +88,12 @@ export const routes = [
                 path: '/admin/userApprovalPlatform',
                 component: userApprovalPlatform  
             },
-
+            // Donated Blood Management
+            {
+                name: 'donatedBloodPlatform',
+                path: '/admin/donatedBloodPlatform',
+                component: donatedBloodPlatform 
+            },
             //User Management
             {
                 name: 'userPlatform',

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ArticleController;  
 use App\Http\Controllers\Admin\UserApprovalController;  
+use App\Http\Controllers\Admin\DonatedBloodController;  
 use App\Http\Controllers\Home\HomeController;  
 use App\Http\Controllers\RegistrationController;  
 use App\Http\Controllers\ChatController;  
@@ -44,6 +45,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:sanctum'], function() {
     Route::get('/getUserApproval', [UserApprovalController::class, 'getUserApproval']);
     Route::post('/userApproved/{id}', [UserApprovalController::class, 'userApproved']);
     Route::post('/userDisapproved/{id}', [UserApprovalController::class, 'userDisapproved']);
+
+    Route::get('/getBloodType', [DonatedBloodController::class, 'getBloodType']);
 
     // User
     Route::post('/storeDonateBlood', [HomeController::class, 'storeDonateBlood']);
