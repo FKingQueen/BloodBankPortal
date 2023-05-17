@@ -47,6 +47,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:sanctum'], function() {
     Route::post('/userDisapproved/{id}', [UserApprovalController::class, 'userDisapproved']);
 
     Route::get('/getBloodType', [DonatedBloodController::class, 'getBloodType']);
+    Route::get('/getDonatedB', [DonatedBloodController::class, 'getDonatedB']);
+
 
     // User
     Route::post('/storeDonateBlood', [HomeController::class, 'storeDonateBlood']);

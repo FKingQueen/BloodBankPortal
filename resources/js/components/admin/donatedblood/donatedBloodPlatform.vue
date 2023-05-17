@@ -4,19 +4,80 @@
                 <div class="flex justify-center text-2xl mb-3">
                     Donated Blood Management
                 </div>
-                <div class="flex justify-evenly ">
-                    <div class="w-2/6">
-                        <Pie :data="this.data" :options="this.options" />
+                <div class="flex justify-evenly mt-10">
+                    <div class="flex items-center">
+                        <h1>Quantity of Bloods Donated:</h1>
                     </div>
-                    <div class="w-2/6">
-                        <Pie :data="this.data1" :options="this.options1" />
+                    <div class="w-3/6">
+                        <Pie v-if="isLoaded" :data="this.data" :options="this.options" />
                     </div>
+                    <!-- <div class="w-2/6">
+                        <Pie v-if="isLoaded1" :data="this.data1" :options="this.options1" />
+                    </div> -->
                 </div>
+                <h1 class="text-left text-base mt-10">Blood Bank Inventory</h1>
+
+                <a-table :data-source="donatedBlood" :columns="columns" size="small">
+                    <template #headerCell="{ column }">
+                    <template v-if="column.key === 'name'">
+                        <span style="color: #1890ff">Name</span>
+                    </template>
+                    </template>
+                    <template
+                    #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
+                    >
+                    <div style="padding: 8px">
+                        <a-input
+                        ref="searchInput"
+                        :placeholder="`Search ${column.dataIndex}`"
+                        :value="selectedKeys[0]"
+                        style="width: 188px; margin-bottom: 8px; display: block"
+                        @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+                        @pressEnter="handleSearch(selectedKeys, confirm, column.dataIndex)"
+                        />
+                        <a-button
+                        type="primary"
+                        size="small"
+                        style="width: 90px; margin-right: 8px"
+                        @click="handleSearch(selectedKeys, confirm, column.dataIndex)"
+                        >
+                        <template #icon><SearchOutlined /></template>
+                        Search
+                        </a-button>
+                        <a-button size="small" style="width: 90px" @click="handleReset(clearFilters)">
+                        Reset
+                        </a-button>
+                    </div>
+                    </template>
+                    <template #customFilterIcon="{ filtered }">
+                    <search-outlined :style="{ color: filtered ? '#108ee9' : undefined }" />
+                    </template>
+                    <template #bodyCell="{ text, column, record, index}">
+                    <span v-if="searchText && searchedColumn === column.dataIndex">
+                        <template
+                        v-for="(fragment, i) in text
+                            .toString()
+                            .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))"
+                        >
+                        <mark
+                            v-if="fragment.toLowerCase() === searchText.toLowerCase()"
+                            :key="i"
+                            class="highlight"
+                        >
+                            {{ fragment }}
+                        </mark>
+                        <template v-else>{{ fragment }}</template>
+                        </template>
+                    </span>
+                    </template>
+
+                </a-table>
+
             </div>
         </div>
     </template>
 <script>
-import { notification } from 'ant-design-vue';
+
 import { SearchOutlined } from '@ant-design/icons-vue';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
@@ -24,63 +85,133 @@ import { defineComponent, reactive, ref, toRefs } from 'vue';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Pie } from 'vue-chartjs'
-// import * as chartConfig from './chartConfig.js'
-
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 export default defineComponent({
-    name: 'BarChart',
+
     components: {
     SearchOutlined,
     Loading,
     Pie
     },
     setup() {
-        return{
+        const state = reactive({
+            searchText: '',
+            searchedColumn: '',
+        });
+        const searchInput = ref();
 
-        }
-    },
-    methods: {
-    
-    },
-    data() {
-        return {
+        const columns = [{
+            title: 'Address',
+            dataIndex: 'address',
+            key: 'address',
+            customFilterDropdown: true,
+            onFilter: (value, record) => record.address.toString().toLowerCase().includes(value.toLowerCase()),
+            onFilterDropdownVisibleChange: visible => {
+            if (visible) {
+                setTimeout(() => {
+                searchInput.value.focus();
+                }, 100);
+            }
+            },
+        }, {
+            title: 'Type of Blood',
+            dataIndex: 'bloodType',
+            key: 'bloodType',
+            customFilterDropdown: true,
+            onFilter: (value, record) => record.bloodType.toString().toLowerCase().includes(value.toLowerCase()),
+            onFilterDropdownVisibleChange: visible => {
+            if (visible) {
+                setTimeout(() => {
+                searchInput.value.focus();
+                }, 100);
+            }
+            },
+        }, {
+            title: 'Quantity',
+            dataIndex: 'quantity',
+            key: 'quantity',
+        }];
+
+        const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        state.searchText = selectedKeys[0];
+        state.searchedColumn = dataIndex;
+        };
+
+        const handleReset = clearFilters => {
+        clearFilters({
+            confirm: true,
+        });
+        state.searchText = '';
+        };
+        return{
+            columns,
+            handleSearch,
+            handleReset,
+            searchInput,
+            ...toRefs(state),
             options: {
                 responsive: true,
                 maintainAspectRatio: true
             },
             data: {
-                labels: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'],
+                labels: [],
                 datasets: [
                     {
-                    backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16', '#E46651', '#00D8FF', '#DD1B16', '#DD1B16'],
-                    data: [40, 20, 80, 10, 20, 80, 10, 10]
+                    backgroundColor: ['#ff6961', '#ffb480', '#f8f38d', '#42d6a4', '#08cad1', '#59adf6', '#9d94ff', '#c780e8'],
+                    data: []
                     }
                 ]
             },
-            options1: {
-                responsive: true,
-                maintainAspectRatio: false
+            bloodType: {
+                data: "",
+                label: []
             },
-            data1: {
-                labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
-                datasets: [
-                    {
-                    backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                    data: [40, 20, 80, 10]
-                    }
-                ]
-            }
+            isLoaded: ref(false),
+        }
+    },
+    methods: {
+
+    },
+    data() {
+        return {
+            donatedBlood: [],
+            addresses: [],
         }
     },
     async created(){
-        axios.get('/api/admin/getBloodType')
+        let existingObj = this;
+        await axios.get('/api/admin/getBloodType')
         .then(function (response) {
-            console.log(response.data);
+            existingObj.bloodType.data = response.data.bloodType
+            existingObj.bloodType.label = response.data.labels
+            for(let i = 0; i < 7; i++){
+                if(existingObj.bloodType.data[i] == 0){
+                    existingObj.bloodType.data.splice(i,1);
+                    existingObj.bloodType.label.splice(i,1);
+                    i--;
+                }
+            }
+            existingObj.data.labels = existingObj.bloodType.label
+            for(let i = 0; i < existingObj.bloodType.data.length; i++){
+                existingObj.data.datasets[0].data.push(existingObj.bloodType.data[i])
+            }
+            existingObj.isLoaded = true
         })
         .catch(function (error) {
-
         });
+
+        await axios.get('/api/admin/getDonatedB')
+        .then(function (response) {
+            console.log(response.data);
+            existingObj.donatedBlood = response.data.data
+            existingObj.addresses = response.data.addresses
+        })
+        .catch(function (error) {
+        });
+
+
     },
     beforeRouteEnter(to, from, next) {
         if(window.Laravel.userType == 'User'){
