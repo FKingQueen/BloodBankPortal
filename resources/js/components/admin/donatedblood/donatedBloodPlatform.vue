@@ -14,7 +14,7 @@
                 </div>
                 <h1 class="text-left text-base mt-10 mb-5">Blood Bank Inventory</h1>
 
-                <a-table v-if="isLoaded1" :data-source="this.donatedBlood.data" :columns="columns" size="small">
+                <a-table v-if="isLoaded1" :data-source="this.donatedBlood.address" :columns="columns" size="small" class="shadow">
                     <template #headerCell="{ column }">
                     <template v-if="column.key === 'name'">
                         <span style="color: #1890ff">Name</span>
@@ -248,7 +248,7 @@ export default defineComponent({
             //     }
             // }
 
-            console.log(existingObj.bloodTypeCount);
+            console.log( existingObj.donatedBlood.data);
             existingObj.isLoaded1 = true
         })
         .catch(function (error) {
