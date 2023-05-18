@@ -11,13 +11,10 @@
                     <div class="w-3/6">
                         <Pie v-if="isLoaded" :data="this.data" :options="this.options" />
                     </div>
-                    <!-- <div class="w-2/6">
-                        <Pie v-if="isLoaded1" :data="this.data1" :options="this.options1" />
-                    </div> -->
                 </div>
-                <h1 class="text-left text-base mt-10">Blood Bank Inventory</h1>
+                <h1 class="text-left text-base mt-10 mb-5">Blood Bank Inventory</h1>
 
-                <a-table :data-source="donatedBlood" :columns="columns" size="small">
+                <a-table v-if="isLoaded1" :data-source="this.donatedBlood.data" :columns="columns" size="small">
                     <template #headerCell="{ column }">
                     <template v-if="column.key === 'name'">
                         <span style="color: #1890ff">Name</span>
@@ -53,22 +50,42 @@
                     <search-outlined :style="{ color: filtered ? '#108ee9' : undefined }" />
                     </template>
                     <template #bodyCell="{ text, column, record, index}">
-                    <span v-if="searchText && searchedColumn === column.dataIndex">
-                        <template
-                        v-for="(fragment, i) in text
-                            .toString()
-                            .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))"
-                        >
-                        <mark
-                            v-if="fragment.toLowerCase() === searchText.toLowerCase()"
-                            :key="i"
-                            class="highlight"
-                        >
-                            {{ fragment }}
-                        </mark>
-                        <template v-else>{{ fragment }}</template>
+                        <span v-if="searchText && searchedColumn === column.dataIndex">
+                            <template
+                            v-for="(fragment, i) in text
+                                .toString()
+                                .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))"
+                            >
+                            <mark
+                                v-if="fragment.toLowerCase() === searchText.toLowerCase()"
+                                :key="i"
+                                class="highlight"
+                            >
+                                {{ fragment }}
+                            </mark>
+                            <template v-else>{{ fragment }}</template>
+                            </template>
+                        </span>
+                        <template v-else-if="column.key === 'address'">
+                            <p v-for="(item, key) in this.donatedBlood.address[index].slice(0,1)">
+                                {{ item.address }}
+                            </p>
+                            <!-- {{ this.donatedBlood.address[index] }} -->
                         </template>
-                    </span>
+                        <template v-else-if="column.key === 'bloodType'">
+                            <div  class="flex text-center">
+                                <div v-for="(item, key) in this.bloodTypeCount[index]">
+                                    {{ item.bloodType }} &nbsp
+                                </div>
+                            </div>
+                            <!-- {{ this.donatedBlood.address[index] }} -->
+                        </template>
+                        <template v-else-if="column.key === 'quantity'">
+                            <p>
+                                {{ this.donatedBlood.address[index].length }}
+                            </p> 
+                        </template>
+
                     </template>
 
                 </a-table>
@@ -101,7 +118,8 @@ export default defineComponent({
         });
         const searchInput = ref();
 
-        const columns = [{
+        const columns = [
+        {
             title: 'Address',
             dataIndex: 'address',
             key: 'address',
@@ -114,6 +132,7 @@ export default defineComponent({
                 }, 100);
             }
             },
+            
         }, {
             title: 'Type of Blood',
             dataIndex: 'bloodType',
@@ -153,7 +172,7 @@ export default defineComponent({
             ...toRefs(state),
             options: {
                 responsive: true,
-                maintainAspectRatio: true
+                maintainAspectRatio: false
             },
             data: {
                 labels: [],
@@ -169,6 +188,13 @@ export default defineComponent({
                 label: []
             },
             isLoaded: ref(false),
+            isLoaded1: ref(false),
+            donatedBlood: {
+                data: "",
+                count: [],
+                address: [],
+            },
+            bloodTypeCount: []
         }
     },
     methods: {
@@ -176,7 +202,7 @@ export default defineComponent({
     },
     data() {
         return {
-            donatedBlood: [],
+
             addresses: [],
         }
     },
@@ -184,6 +210,7 @@ export default defineComponent({
         let existingObj = this;
         await axios.get('/api/admin/getBloodType')
         .then(function (response) {
+            
             existingObj.bloodType.data = response.data.bloodType
             existingObj.bloodType.label = response.data.labels
             for(let i = 0; i < 7; i++){
@@ -197,6 +224,8 @@ export default defineComponent({
             for(let i = 0; i < existingObj.bloodType.data.length; i++){
                 existingObj.data.datasets[0].data.push(existingObj.bloodType.data[i])
             }
+
+            console.log();
             existingObj.isLoaded = true
         })
         .catch(function (error) {
@@ -204,13 +233,26 @@ export default defineComponent({
 
         await axios.get('/api/admin/getDonatedB')
         .then(function (response) {
-            console.log(response.data);
-            existingObj.donatedBlood = response.data.data
-            existingObj.addresses = response.data.addresses
+            existingObj.donatedBlood.data = response.data.quantity
+            existingObj.donatedBlood.count = response.data.quantityCount
+            existingObj.donatedBlood.address = response.data.address
+            existingObj.bloodTypeCount = response.data.sample
+
+            // for(let i = 0; i < existingObj.bloodTypeAddress.length; i++){
+            //     for(let k = 0; k < existingObj.bloodTypeAddress[i].length; k++){
+            //         console.log(existingObj.bloodTypeAddress[i][k].bloodType);
+            //         if (keys.indexOf(key) === -1) {
+            //             keys.push(key);
+            //             output.push(post);
+            //         }
+            //     }
+            // }
+
+            console.log(existingObj.bloodTypeCount);
+            existingObj.isLoaded1 = true
         })
         .catch(function (error) {
         });
-
 
     },
     beforeRouteEnter(to, from, next) {
