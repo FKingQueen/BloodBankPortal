@@ -6,8 +6,9 @@
         </div>
         <div class=" w-full flex justify-center">
             <div class="m-5 bg-white shadow-inner shadow-lg rounded px-10 w-2/5 py-5">
-                <h1 class="text-xl mb-3">Registration Form</h1>
+                
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
+                    <h1 class="text-xl mb-3">Personal Information</h1>
                     <FormItem label="First Name" prop="firstName">
                         <Input v-model="formValidate.firstName" placeholder="Enter your First Name"></Input>
                     </FormItem>
@@ -18,9 +19,16 @@
                         <Input v-model="formValidate.middleInitial" placeholder="Enter your Middle Initial"></Input>
                     </FormItem>
 
-                    <FormItem label="Middle Initial" prop="Age">
-                        <a-date-picker v-model="formValidate.birthDate"  />
-                        <DatePicker type="date" placeholder="Select date" style="width: 200px" />
+                    <FormItem label="Birth Data" prop="birthDate" class="w-full ">
+                        <Input type="date" v-model="formValidate.birthDate" class="w-full rounded"></Input>
+                    </FormItem>
+                    
+
+                    <FormItem label="Gender" prop="gender">
+                        <Select v-model="formValidate.gender" placeholder="Select your Gender">
+                            <Option value="Male">Male</Option>
+                            <Option value="Female">Female</Option>
+                        </Select>
                     </FormItem>
 
                     <FormItem label="Town/City" prop="address">
@@ -51,45 +59,7 @@
                             <Option value="Zamboanguita">Zamboanguita</Option>
                         </Select>
                     </FormItem>
-                    
-                    <FormItem label="E-mail" prop="email">
-                        <Input v-model="formValidate.email" placeholder="Enter your e-mail"></Input>
-                    </FormItem>
-                    <FormItem label="Age" prop="age" v-bind="config">
-                        <Input v-model="formValidate.age" placeholder="Enter your Age"></Input>
-                    </FormItem>
-                    <FormItem label="Phone Number" prop="phoneNumber">
-                        <Input v-model="formValidate.phoneNumber" placeholder="Enter your Phone Number"></Input>
-                    </FormItem>
-                    <FormItem label="Gender" prop="gender">
-                        <Select v-model="formValidate.gender" placeholder="Select your Gender">
-                            <Option value="Male">Male</Option>
-                            <Option value="Female">Female</Option>
-                        </Select>
-                    </FormItem>
-                    <Form inline>
 
-                    </Form>
-                    <FormItem label="Identifictaion Picture" prop="idPic">
-                        <Upload
-                            ref="uploads"
-                            :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
-                            :on-success="handleSuccess"
-                            :on-error="handleError"
-                            :format="['jpg','jpeg','png']"
-                            :on-format-error="handleFormatError"
-                            :on-exceeded-size="handleMaxSize"
-                            action="/api/uploadid">
-                            <Button icon="ios-cloud-upload-outline">Upload files</Button>
-                        </Upload>
-                        <div v-if="formValidate.idPic" class="demo-upload-list">
-                            <Image :src="`/id/${formValidate.idPic}`" fit="cover" width="100%" height="100%" />
-                            <div class="demo-upload-list-cover">
-                                <Icon type="ios-eye-outline" @click="handleView(item.name)"></Icon>
-                                <Icon type="ios-trash-outline" @click="deleteImage"></Icon>
-                            </div>
-                        </div>
-                    </FormItem>
                     <FormItem label="Blood Type" prop="bloodType">
                         <Select v-model="formValidate.bloodType" placeholder="Select your Gender">
                             <Option value="A+">A+</Option>
@@ -102,6 +72,37 @@
                             <Option value="AB-">AB-</Option>
                         </Select>
                     </FormItem>
+
+                    <FormItem label="Phone Number" prop="phoneNumber">
+                        <Input v-model="formValidate.phoneNumber" placeholder="Enter your Phone Number"></Input>
+                    </FormItem>
+
+                    <FormItem label="Identifictaion Picture" prop="idPic">
+                        <Upload 
+                            ref="uploads"
+                            :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
+                            :on-success="handleSuccess"
+                            :on-error="handleError"
+                            :format="['jpg','jpeg','png']"
+                            :on-format-error="handleFormatError"
+                            :on-exceeded-size="handleMaxSize"
+                            action="/api/uploadid">
+                            <Button icon="ios-cloud-upload-outline">Upload files</Button>
+                        </Upload>
+                        <div v-if="formValidate.idPic" class="demo-upload-list ">
+                            <Image :src="`/id/${formValidate.idPic}`" fit="cover" width="100%" height="100%" />
+                            <div class="demo-upload-list-cover">
+                                <Icon type="ios-eye-outline" @click="handleView(item.name)"></Icon>
+                                <Icon type="ios-trash-outline" @click="deleteImage"></Icon>
+                            </div>
+                        </div>
+                    </FormItem>
+                    
+                    <h1 class="text-xl mb-3">Account Set-Up</h1>
+                    <FormItem label="E-mail" prop="email">
+                        <Input v-model="formValidate.email" placeholder="Enter your e-mail"></Input>
+                    </FormItem>
+
                     <FormItem label="Password" prop="passwd">
                         <Input type="password" placeholder="Password" v-model="formValidate.passwd"></Input>
                     </FormItem>
@@ -126,6 +127,7 @@
   import { defineComponent, ref, onMounted } from 'vue';
   import { notification } from 'ant-design-vue';
   import { useRoute, useRouter} from 'vue-router'; 
+  
   export default defineComponent({
     data(){
         
@@ -155,7 +157,6 @@
                 lastName: '',
                 middleInitial: '',
                 email: '',
-                age: '',
                 birthDate: '',
                 address: '',
                 phoneNumber: '',
@@ -179,12 +180,12 @@
                 birthDate: [
                     { required: true, message: 'The Birth Date cannot be empty', trigger: 'blur' }
                 ],
+                address: [
+                    { required: true, message: 'The Town/City cannot be empty', trigger: 'blur' }
+                ],
                 phoneNumber: [
                     { required: true, message: 'The Phone Number cannot be empty', trigger: 'blur' },
                     { type: 'string', max: 11, min: 11, message: '11 digits is required', trigger: 'blur' }
-                ],
-                age: [
-                    { required: true, message: 'The Age cannot be empty', trigger: 'blur' }
                 ],
                 gender: [
                     { required: true, message: 'The Gender cannot be empty', trigger: 'blur' }
@@ -211,7 +212,6 @@
     methods: {
         async handleSubmit (name) {
             let existingObj = this;
-            console.log(existingObj.formValidate);
             await this.$refs[name].validate((valid) => {
                 if (valid) {
                     const res = axios.post(`/api/register`, this.formValidate)

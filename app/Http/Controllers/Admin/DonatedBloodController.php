@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DonateBlood;
+use App\Models\BloodInventory;
+use App\Models\User;
+use Carbon\Carbon;
+use DB;
 
 class DonatedBloodController extends Controller
 {
@@ -50,25 +54,6 @@ class DonatedBloodController extends Controller
         for($i = 0; $i < $sample->count();$i++){
             $bloodType[$i] = $sample[$i]->unique('bloodType')->values();
         }
-        
-
-        // $quantityCount[0] = DonateBlood::where('bloodType', "A+")->count(); 
-        // $quantityCount[1] = DonateBlood::where('bloodType', "A-")->count(); 
-        // $quantityCount[2] = DonateBlood::where('bloodType', "B+")->count(); 
-        // $quantityCount[3] = DonateBlood::where('bloodType', "B-")->count(); 
-        // $quantityCount[4] = DonateBlood::where('bloodType', "O+")->count(); 
-        // $quantityCount[5] = DonateBlood::where('bloodType', "O-")->count(); 
-        // $quantityCount[6] = DonateBlood::where('bloodType', "AB+")->count(); 
-        // $quantityCount[7] = DonateBlood::where('bloodType', "AB-")->count(); 
-
-        // $i = 0;
-        // $quantity = [];
-
-        // foreach($data as $key => $dt){
-        //     if($address[$key] == $dt->address){
-        //         $quantity[$key] = DonateBlood::where('address', $address[$key])->where('bloodType', 'A+')->count(); 
-        //     }
-        // }
 
 
         return response()->json([
@@ -77,5 +62,61 @@ class DonatedBloodController extends Controller
             'quantityCount'  =>  $quantityCount,
             'sample'  =>   $bloodType,
         ]);
+    }
+
+    public function getBInventory(){
+        return BloodInventory::orderBy('bloodType')->get();
+    }
+
+    public function storeBloodInventory(Request $request){
+        $donateDate = today();
+        $expireDate = Carbon::now()->addDays(35);
+        $age = Carbon::parse($request->birthDate)->age;
+
+        BloodInventory::create([
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
+            'middleInitial' => $request->middleInitial,
+            'address' => $request->address,
+            'gender' => $request->gender,
+            'age' => $age,
+            'birthDate' => $request->birthDate,
+            'bloodType' => $request->bloodType,
+            'donateDate' => $donateDate->format('m-d-Y'),
+            'expireDate' => $expireDate->format('m-d-Y'),
+        ]);
+        return "success";
+    }
+
+    public function deleteBloodInventory($id) {
+        $BloodInventory = BloodInventory::find($id);
+        $BloodInventory->delete();
+        return;
+    }
+
+    public function getBloodInventoryEdit($id){
+        return BloodInventory::find($id);
+    }
+
+    public function updateBloodInventory(Request $request){
+        $donateDate = today();
+        $expireDate = Carbon::now()->addDays(35);
+        $age = Carbon::parse($request->birthDate)->age;
+
+        DB::table('blood_inventories')
+        ->where('id', $request->id)
+        ->update([
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
+            'middleInitial' => $request->middleInitial,
+            'address' => $request->address,
+            'gender' => $request->gender,
+            'age' => $age,
+            'birthDate' => $request->birthDate,
+            'bloodType' => $request->bloodType,
+            'donateDate' => $donateDate->format('m-d-Y'),
+            'expireDate' => $expireDate->format('m-d-Y'),
+        ]);
+        return;
     }
 }

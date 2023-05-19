@@ -14,6 +14,7 @@ class UserApproval extends Model
         'lastName',
         'middleInitial',
         'age',
+        'birthDate',
         'email',
         'address',
         'gender',

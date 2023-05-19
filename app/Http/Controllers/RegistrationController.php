@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserApproval;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class RegistrationController extends Controller
 {
@@ -32,6 +33,8 @@ class RegistrationController extends Controller
     }
 
     public function register(Request $request){
+        $age = Carbon::parse($request->birthDate)->age;
+        
         $validated = $request->validate([
             'firstName' => 'required',
             'lastName' => 'required',
@@ -39,7 +42,7 @@ class RegistrationController extends Controller
             'address' => 'required',
             'idPic' => 'required',
             'gender' => 'required',
-            'age' => 'required',
+            'birthDate' => 'required',
             'bloodType' => 'required',
             'phoneNumber' => 'required|min:11|max:11',
             'email' => 'required|email|unique:users|unique:user_approvals',
@@ -55,7 +58,8 @@ class RegistrationController extends Controller
             'address' => $request->address,
             'idPicName' => $request->idPic,
             'gender' => $request->gender,
-            'age' => $request->age,
+            'age' => $age,
+            'birthDate' => $request->birthDate,
             'bloodType' => $request->bloodType,
             'phoneNumber' => $request->phoneNumber,
             'email' => $request->email,

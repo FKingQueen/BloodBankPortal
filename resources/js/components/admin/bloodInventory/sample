@@ -1,0 +1,63 @@
+<template>
+    <div class="m-5 bg-white shadow-inner shadow-lg rounded px-10 py-5">
+        <div class="flex justify-center text-2xl mb-3">
+            User Management
+        </div>
+        <a-table :columns="columns" :data-source="data" class="components-table-demo-nested">
+            <template #bodyCell="{ column }">
+                <template v-if="column.key === 'operation'">
+                <a>Publish</a>
+                </template>
+            </template>
+            <template #expandedRowRender>
+                <a-table :columns="innerColumns" :data-source="innerData" :pagination="false">
+                <template #bodyCell="{ column }">
+                    <template v-if="column.key === 'state'">
+                    <span>
+                        <a-badge status="success" />
+                        Finished
+                    </span>
+                    </template>
+                    <template v-else-if="column.key === 'operation'">
+                    <span class="table-operation">
+                        <a>Pause</a>
+                        <a>Stop</a>
+                        <a-dropdown>
+                        <template #overlay>
+                            <a-menu>
+                            <a-menu-item>Action 1</a-menu-item>
+                            <a-menu-item>Action 2</a-menu-item>
+                            </a-menu>
+                        </template>
+                        <a>
+                            More
+                            <down-outlined />
+                        </a>
+                        </a-dropdown>
+                    </span>
+                    </template>
+                </template>
+                </a-table>
+            </template>
+        </a-table>
+    </div>
+    
+  </template>
+  <script>
+  import { DownOutlined } from '@ant-design/icons-vue';
+  import { defineComponent } from 'vue';
+  
+  export default defineComponent({
+    components: {
+      DownOutlined,
+    },
+    setup() {
+      return {
+        data,
+        columns,
+        innerColumns,
+        innerData,
+      };
+    },
+  });
+  </script>

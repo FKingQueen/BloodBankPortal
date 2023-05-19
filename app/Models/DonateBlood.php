@@ -15,8 +15,14 @@ class DonateBlood extends Model
         'hourSleep',
         'drugUser',
         'alcoholic',
+        'expireDate',
+        'donateDate',
         'db3',
         'cardHolder',
         'weight'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

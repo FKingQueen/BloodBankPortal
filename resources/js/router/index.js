@@ -16,7 +16,12 @@ import editUserForm from '../components/admin/user/editForm.vue';
 import userApprovalPlatform from '../components/admin/userApproval/userApprovalPlatform.vue';
 
 // Donated Blood
-import donatedBloodPlatform from '../components/admin/donatedBlood/donatedBloodPlatform.vue';
+import potentialDonors from '../components/admin/donatedBlood/donatedBloodPlatform.vue';
+
+// Blood Inventory
+import bloodInventory from '../components/admin/bloodInventory/bloodInventory.vue';
+import addForm from '../components/admin/bloodInventory/addForm.vue';
+import editForm from '../components/admin/bloodInventory/editForm.vue';
 
 
 // Login
@@ -90,9 +95,25 @@ export const routes = [
             },
             // Donated Blood Management
             {
-                name: 'donatedBloodPlatform',
-                path: '/admin/donatedBloodPlatform',
-                component: donatedBloodPlatform 
+                name: 'potentialDonors',
+                path: '/admin/potentialDonors',
+                component: potentialDonors 
+            },
+            // Blood Inventory Management
+            {
+                name: 'bloodInventory',
+                path: '/admin/bloodInventory',
+                component: bloodInventory 
+            },
+            {
+                name: 'addForm',
+                path: '/admin/bloodInventory/addForm',
+                component: addForm
+            },
+            {
+                name: 'editForm',
+                path: '/admin/bloodInventory/editForm/:id',
+                component: editForm
             },
             //User Management
             {

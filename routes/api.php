@@ -48,7 +48,11 @@ Route::group(['prefix' => 'admin','middleware' => 'auth:sanctum'], function() {
 
     Route::get('/getBloodType', [DonatedBloodController::class, 'getBloodType']);
     Route::get('/getDonatedB', [DonatedBloodController::class, 'getDonatedB']);
-
+    Route::get('/getBInventory', [DonatedBloodController::class, 'getBInventory']);
+    Route::post('/storeBloodInventory', [DonatedBloodController::class, 'storeBloodInventory']);
+    Route::post('/deleteBloodInventory/{id}', [DonatedBloodController::class, 'deleteBloodInventory']);
+    Route::get('/getBloodInventoryEdit/{id}', [DonatedBloodController::class, 'getBloodInventoryEdit']);
+    Route::post('/updateBloodInventory', [DonatedBloodController::class, 'updateBloodInventory']);
 
     // User
     Route::post('/storeDonateBlood', [HomeController::class, 'storeDonateBlood']);

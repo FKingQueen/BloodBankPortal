@@ -123,6 +123,7 @@ export default defineComponent({
                     } else {
                         axios.post(`/api/admin/storeDonateBlood`, this.formValidate)
                         .then(function (response) {
+                            console.log(response.data);
                             Modal.success({
                                 title: 'Submission is Complete!',
                                 content: h('div', {}, [h('p', 'Please wait for a patient matching your blood type or contact this Phone Number'),h('a', '09123456789'),h('p', 'for next process. Thank You!')]),

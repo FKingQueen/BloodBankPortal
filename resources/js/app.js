@@ -12,10 +12,14 @@ import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import 'view-ui-plus/dist/styles/viewuiplus.css';
 
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 
 const app = createApp(App);
 app.config.globalProperties.$axios = axios;
 app.use(ViewUIPlus);
 app.use(router);
+app.component('VueDatePicker', VueDatePicker);
 app.use(Antd);
 app.mount('#app');

@@ -1,7 +1,7 @@
 <template class="">
   <div class="h-screen bgImage">
     <div class="text-center pt-40 ">
-      <h1 class="text-2xl font-bold text-white ">Web Portal for Blood Bank in Negros Oriental Provincial Hospital</h1>
+      <h1 class="text-2xl font-bold text-white ">Welcome to Negros Oriental Provincial Hospital Blood Bank</h1>
     </div>
     <div class="flex justify-center pt-20">
         <div class="w-full flex flex-col items-center ">
@@ -133,7 +133,7 @@ export default defineComponent({
                 window.Laravel.isLoggedin = true
 
                 if(response.data.userType == 'Admin'){
-                  this.$router.push({path: '/admin/userApprovalPlatform'})
+                  this.$router.push({path: '/admin/potentialDonors'})
                 }else if(response.data.userType == 'User'){
                   this.$router.push({path: '/home'})
                 }

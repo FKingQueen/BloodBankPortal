@@ -22,6 +22,7 @@
     "dependencies": {
         "@fawmi/vue-google-maps": "^0.9.79",
         "@googlemaps/js-api-loader": "^1.15.1",
+        "@vuepic/vue-datepicker": "^5.1.1",
         "ant-design-vue": "^3.2.16",
         "chart.js": "^4.3.0",
         "js-cookie": "^3.0.1",

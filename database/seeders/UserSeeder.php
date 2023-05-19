@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
             'LastName' => 'Admin',
             'middleInitial' => 'A',
             'userType' => 'Admin',
+            'birthDate' => '2023-05-19',
             'age' => '23',
             'address' => 'Amlan',
             'gender' => 'Male',

@@ -29,6 +29,7 @@ class UserApprovalController extends Controller
             'idPicName' => $newUser->idPicName,
             'gender' => $newUser->gender,
             'age' => $newUser->age,
+            'birthDate' => $newUser->birthDate,
             'bloodType' => $newUser->bloodType,
             'phoneNumber' => $newUser->phoneNumber,
             'email' => $newUser->email,

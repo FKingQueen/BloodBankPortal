@@ -2,7 +2,7 @@
         <div class="p-2">
             <div class="m-5 bg-white shadow-inner shadow-lg rounded px-10 py-5">
                 <div class="flex justify-center text-2xl mb-3">
-                    Donated Blood Management
+                    Potential Donors
                 </div>
                 <div class="flex justify-evenly mt-10">
                     <div class="flex items-center">
@@ -12,9 +12,8 @@
                         <Pie v-if="isLoaded" :data="this.data" :options="this.options" />
                     </div>
                 </div>
-                <h1 class="text-left text-base mt-10 mb-5">Blood Bank Inventory</h1>
 
-                <a-table v-if="isLoaded1" :data-source="this.donatedBlood.address" :columns="columns" size="small" class="shadow">
+                <a-table v-if="isLoaded1" :data-source="this.donatedBlood.address" :columns="columns" size="small" class="shadow mt-5">
                     <template #headerCell="{ column }">
                     <template v-if="column.key === 'name'">
                         <span style="color: #1890ff">Name</span>
