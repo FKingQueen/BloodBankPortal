@@ -18,8 +18,13 @@
                         <Input v-model="formValidate.middleInitial" placeholder="Enter your Middle Initial"></Input>
                     </FormItem>
 
-                    <FormItem label="Address" prop="address">
-                        <Select v-model="formValidate.address" placeholder="Select your Municipality/City">
+                    <FormItem label="Middle Initial" prop="Age">
+                        <a-date-picker v-model="formValidate.birthDate"  />
+                        <DatePicker type="date" placeholder="Select date" style="width: 200px" />
+                    </FormItem>
+
+                    <FormItem label="Town/City" prop="address">
+                        <Select v-model="formValidate.address" placeholder="Select your Town/City">
                             <Option value="Amlan">Amlan</Option>
                             <Option value="Ayungon">Ayungon</Option>
                             <Option value="Bacong">Bacong</Option>
@@ -151,6 +156,7 @@
                 middleInitial: '',
                 email: '',
                 age: '',
+                birthDate: '',
                 address: '',
                 phoneNumber: '',
                 gender: '',
@@ -205,6 +211,7 @@
     methods: {
         async handleSubmit (name) {
             let existingObj = this;
+            console.log(existingObj.formValidate);
             await this.$refs[name].validate((valid) => {
                 if (valid) {
                     const res = axios.post(`/api/register`, this.formValidate)
