@@ -1,9 +1,15 @@
 <template class="">
   <div class="h-screen bgImage">
-    <div class="text-center pt-40 ">
+    <div class="flex justify-center items-center pt-16">
+      <img src="/img/logo1.png" alt="" style="width: 15%; aspect-ratio: 3/2; object-fit: contain;" class="border">
+      <img src="/img/logo2.png" alt="" style="width: 15%; aspect-ratio: 3/2; object-fit: contain;" class="border">
+      <img src="/img/logo3.png" alt="" style="width: 15%; aspect-ratio: 3/2; object-fit: contain;" class="border">
+    </div>
+    <div class="text-center">
       <h1 class="text-2xl font-bold text-white ">Welcome to Negros Oriental Provincial Hospital Blood Bank</h1>
     </div>
-    <div class="flex justify-center pt-20">
+
+    <div class="flex justify-center pt-10">
         <div class="w-full flex flex-col items-center ">
             <div class="md:w-1/4 w-11/12 px-2 pt-5 shadow-lg border bg-white">
                 <div>

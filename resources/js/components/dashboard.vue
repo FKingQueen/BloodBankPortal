@@ -96,13 +96,13 @@
     <div v-if="isUser">
         <!-- Header -->
         <div class=" w-full flex items-center justify-between bg-gray-300 h-14  z-10">
-          <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 ">
+          <div class="flex items-center justify-start md:justify-center pl-3 w-1/12">
             <div>
               <img src="/img/bloodDrop.png" alt="" class="object-cover w-10 px-2">
             </div>
             <span class="hidden md:block ">PORTAL</span>
           </div>
-          <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 ">
+          <div class="flex items-center justify-start md:justify-center pl-3 w-3/12">
                 <router-link to="/home" :class="{ active: activeItem}" class="text-black relative flex flex-row items-center h-12 focus:outline-none hover:text-black border-b-4 border-transparent hover:border-blue-500 p-6">
                   <span class="">HOME</span>
                 </router-link>
@@ -110,8 +110,16 @@
                   <span class="">CHATBOX</span>
                 </router-link>
           </div>
+
+          <div class="w-4/12  ">
+            <div class="flex justify-center items-center">
+              <img src="/img/logo1.png" alt="" style="width: 15%; aspect-ratio: 2/1; object-fit: contain;">
+              <img src="/img/logo2.png" alt="" style="width: 15%; aspect-ratio: 2/1; object-fit: contain;">
+              <img src="/img/logo3.png" alt="" style="width: 15%; aspect-ratio: 2/1; object-fit: contain;">
+            </div>
+          </div>
           
-          <div class="flex justify-between items-center   header-right">
+          <div class="flex justify-between items-center w-4/12">
             <ul class="justify-end flex w-full">
               <li>
                 <a @click="logout()" class="flex items-center mr-4 text-black hover:text-gray-400 hidden lg:block">

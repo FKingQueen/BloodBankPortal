@@ -55,7 +55,7 @@
                     </FormItem>
 
                     <FormItem label="Blood Type" prop="bloodType">
-                        <Select v-model="formValidate.bloodType" placeholder="Select your Gender">
+                        <Select v-model="formValidate.bloodType" placeholder="Select your Blood Type">
                             <Option value="A+">A+</Option>
                             <Option value="A-">A-</Option>
                             <Option value="B+">B+</Option>

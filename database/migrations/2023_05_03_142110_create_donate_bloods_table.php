@@ -18,6 +18,7 @@ class CreateDonateBloodsTable extends Migration
             $table->integer('user_id');
             $table->string('bloodType');
             $table->string('address');
+            $table->string('phoneNumber');
             $table->boolean('hourSleep');
             $table->boolean('drugUser');
             $table->boolean('alcoholic');

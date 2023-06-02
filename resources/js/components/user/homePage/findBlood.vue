@@ -64,10 +64,16 @@
                                 The chosen Area does not have any Blood Donation.
                             </div>
                             <div class="grid grid-cols-2  gap-4">
-                                <div v-for='(donatedBlood, index) in donatedBloods' :key='donatedBlood.id' class="text-end border-2 p-2">
-                                    <p class="mt-1 text-black">Address: <a-tag color="green">{{ donatedBlood.address }} {{ donatedBlood.id }}</a-tag> </p>
-                                    <p class="mt-1 text-black">Blood Type:  <a-tag color="red">{{ donatedBlood.bloodType }}</a-tag> </p>
-                                    <Button :size="buttonSize" v-on:click="chatNow(donatedBlood)" type="dashed" class="mt-1 mr-2">Chat Now!</Button>
+                                <div v-for='(donatedBlood, index) in donatedBloods' :key='donatedBlood.id' class="border-2 p-2">
+                                    <div class="w-full ">
+                                        <p class="mt-1 text-black">Address: <a-tag color="green">{{ donatedBlood.address }}</a-tag> </p>
+                                        <p class="mt-1 text-black">Blood Type:  <a-tag color="red">{{ donatedBlood.bloodType }}</a-tag> </p>
+                                        <p class="mt-1 text-black">Contact # :  <a-tag color="blue">{{ donatedBlood.phoneNumber }}</a-tag> </p>
+                                    </div>
+                                    <div class="w-full text-center mt-2">
+                                        <Button :size="buttonSize" v-on:click="chatNow(donatedBlood)" type="dashed" class=" text-center">Chat Now!</Button>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -127,6 +133,7 @@
                 if (valid) {
                         axios.post(`/api/admin/getDonatedBlood`, this.formValidate)
                         .then(function (response) {
+                            console.log(response.data);
                             existingObj.isActiveResult = true;
                             if(response.data == ''){
                                 existingObj.isActive = true;

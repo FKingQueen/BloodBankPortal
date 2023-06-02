@@ -19,6 +19,7 @@ class HomeController extends Controller
         DonateBlood::create([
             'user_id' => Auth::user()->id,
             'address' => Auth::user()->address,
+            'phoneNumber' => Auth::user()->phoneNumber,
             'bloodType' => $request->bloodType,
             'alcoholic' => $request->alcoholic,
             'cardHolder' => $request->cardHolder,

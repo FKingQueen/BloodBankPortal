@@ -12,6 +12,7 @@ class DonateBlood extends Model
         'user_id',
         'bloodType',
         'address',
+        'phoneNumber',
         'hourSleep',
         'drugUser',
         'alcoholic',
