@@ -10,7 +10,7 @@
                         <a-button key="submit"  @click="handleSubmit()"  type="primary" class="w-full mb-5">DONATE BLOOD</a-button>
                     </div>
                     <div class="flex justify-center">
-                        <a-button key="submit" @click="this.$router.push('/findBlood')" type="primary" class="w-full">LOOKING FOR BLOOD</a-button>
+                        <a-button key="submit" @click="this.$router.push('/findBlood')" type="primary" class="w-full">LOOKING FOR DONORS</a-button>
                     </div>
                 </div>
             </div>
