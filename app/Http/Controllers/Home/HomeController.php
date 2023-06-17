@@ -20,6 +20,7 @@ class HomeController extends Controller
             'user_id' => Auth::user()->id,
             'address' => Auth::user()->address,
             'phoneNumber' => Auth::user()->phoneNumber,
+            'bloodType' => $request->bloodType,
             'donateDate' => $donateDate->format('m-d-Y'),
             'expireDate' => $expireDate->format('m-d-Y'),
         ]);
