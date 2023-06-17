@@ -13,14 +13,8 @@ class DonateBlood extends Model
         'bloodType',
         'address',
         'phoneNumber',
-        'hourSleep',
-        'drugUser',
-        'alcoholic',
         'expireDate',
         'donateDate',
-        'db3',
-        'cardHolder',
-        'weight'
     ];
 
     public function user(){

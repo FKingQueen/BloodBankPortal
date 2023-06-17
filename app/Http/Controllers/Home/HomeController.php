@@ -20,16 +20,8 @@ class HomeController extends Controller
             'user_id' => Auth::user()->id,
             'address' => Auth::user()->address,
             'phoneNumber' => Auth::user()->phoneNumber,
-            'bloodType' => $request->bloodType,
-            'alcoholic' => $request->alcoholic,
-            'cardHolder' => $request->cardHolder,
-            'cardHolder' => $request->cardHolder,
-            'drugUser' => $request->drugUser,
-            'db3' => $request->db3,
-            'hourSleep' => $request->hourSleep,
             'donateDate' => $donateDate->format('m-d-Y'),
             'expireDate' => $expireDate->format('m-d-Y'),
-            'weight' => $request->weight,
         ]);
         return $request->all();
     }
