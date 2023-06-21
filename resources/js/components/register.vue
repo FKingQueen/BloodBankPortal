@@ -61,7 +61,7 @@
                     </FormItem>
 
                     <FormItem label="Blood Type" prop="bloodType">
-                        <Select v-model="formValidate.bloodType" placeholder="Select your Gender">
+                        <Select v-model="formValidate.bloodType" placeholder="Select your Blood Type">
                             <Option value="A+">A+</Option>
                             <Option value="A-">A-</Option>
                             <Option value="B+">B+</Option>
@@ -77,7 +77,7 @@
                         <Input v-model="formValidate.phoneNumber" placeholder="Enter your Phone Number"></Input>
                     </FormItem>
 
-                    <FormItem label="Identifictaion Picture" prop="idPic">
+                    <FormItem label="Identification Picture" prop="idPic">
                         <Upload 
                             ref="uploads"
                             :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
@@ -134,7 +134,9 @@
         const validatePass = (rule, value, callback) => {
           if (value === '') {
               callback(new Error('Please enter your password'));
-          } else {
+          } else if (value.length < 8) {
+            callback(new Error('Password must be at least 8 characters'));
+          }else {
               if (this.formValidate.passwdCheck !== '') {
                   this.$refs.formValidate.validateField('passwdCheck');
               }
@@ -144,6 +146,8 @@
         const validatePassCheck = (rule, value, callback) => {
           if (value === '') {
               callback(new Error('Please enter your password again'));
+          } else if(value.length < 8) {
+            callback(new Error('Password must be at least 8 characters'));
           } else if (value !== this.formValidate.passwd) {
               callback(new Error('The two input passwords do not match!'));
           } else {
@@ -218,7 +222,7 @@
                     .then(function (response) {
                         notification.success({
                             message: 'Notification',
-                            description: 'You are Successfully Register, Kindly wait for the approval of the admin, You can check the approval notice through your email. Thankyou',
+                            description: '"You are successfully registered", Kindly wait for the approval of the admin. You can check the approval notice through your email. Thank you.',
                         });
                         existingObj.$router.push('/');
                     })

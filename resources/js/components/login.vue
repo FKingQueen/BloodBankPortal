@@ -62,7 +62,7 @@
                     <div class="flex justify-center space-x-2" >
                         <p>No account?</p>
                         <router-link to="/register">
-                          RegisterHere
+                          Register Here
                         </router-link>
                     </div>
                 </a-form>
@@ -133,7 +133,7 @@ export default defineComponent({
                 } else if(response.data == "approval"){
                     notification.info({
                         message: 'Notification',
-                        description: 'Wait for the approval of the Admin, You can check the approval notice through your email. Thankyou',
+                        description: 'Wait for the approval of the admin, You can check the approval notice through your email. Thankyou',
                     });
                 }
                 window.Laravel.isLoggedin = true
