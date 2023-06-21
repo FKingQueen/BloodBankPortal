@@ -20,6 +20,5 @@ const app = createApp(App);
 app.config.globalProperties.$axios = axios;
 app.use(ViewUIPlus);
 app.use(router);
-app.component('VueDatePicker', VueDatePicker);
 app.use(Antd);
 app.mount('#app');
